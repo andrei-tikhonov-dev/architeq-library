@@ -1,1 +1,3 @@
-export { default as Page } from "./components/Page";
+export { Icon } from "./components/Icon";
+export { StatusIcon } from "./components/StatusIcon";
+export { StatusLine } from "./components/StatusLine";

@@ -5,6 +5,16 @@ import dts from "rollup-plugin-dts";
 import postcss from "rollup-plugin-postcss";
 import packageJson from "./package.json" assert { type: "json" };
 
+const externalModules = [
+  "react",
+  "react-dom",
+  "@grafana/data",
+  "@grafana/runtime",
+  "@grafana/schema",
+  "@grafana/ui",
+  "tslib",
+];
+
 export default [
   {
     input: "src/index.ts",
@@ -23,7 +33,7 @@ export default [
     plugins: [
       resolve({
         extensions: [".js", ".jsx", ".ts", ".tsx"],
-        skip: ["react", "react-dom"],
+        skip: externalModules,
       }),
       commonjs(),
       typescript({
@@ -32,7 +42,7 @@ export default [
       }),
       postcss({ extensions: [".css"], inject: true, extract: false }),
     ],
-    external: ["react", "react-dom", "react/jsx-runtime"],
+    external: [...externalModules, "react/jsx-runtime"],
   },
   {
     input: "dist/esm/types/index.d.ts",
