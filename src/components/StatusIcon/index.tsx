@@ -34,9 +34,5 @@ export const StatusIcon: React.FC<InfoIconProps> = ({ iconName }) => {
     [styles.critical]: iconName === "c",
   });
 
-  return (
-    <span className={statusClass}>
-      {iconName && <Icon iconName={iconName} />}
-    </span>
-  );
+  return <span className={statusClass}>{iconName && <Icon />}</span>;
 };
