@@ -177,7 +177,7 @@ import Share from "./icons/Share";
 import Shift from "./icons/Shift";
 import ShiftLock from "./icons/ShiftLock";
 import ShiftLockOff from "./icons/ShiftLockOff";
-import Shoppingmode from "./icons/Shoppingmode";
+import ShoppingMode from "./icons/ShoppingMode";
 import Sick from "./icons/Sick";
 import Sms from "./icons/Sms";
 import Sort from "./icons/Sort";
@@ -211,226 +211,249 @@ import VisibilityOff from "./icons/VisibilityOff";
 import VitalSigns from "./icons/VitalSigns";
 import Warning from "./icons/Warning";
 
-export const Icon = () => (
-  <div
-    style={{
-      fontSize: "100px",
-      color: "green",
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "10px",
-    }}
-  >
-    <AccountCircle />
-    <AccountTree />
-    <Acute />
-    <Add2 />
-    <Add />
-    <AddReaction />
-    <AreaChart />
-    <ArrowDropDown />
-    <ArrowDropUp />
-    <ArrowLeft />
-    <ArrowRight />
-    <AutoAwesomeMotion />
-    <Backspace />
-    <BarChart />
-    <BeachAccess />
-    <Block />
-    <Book />
-    <Bookmark />
-    <BookmarkAdd />
-    <BookmarkRemove />
-    <BugReport />
-    <BusinessCenter />
-    <CalendarAddOn />
-    <CalendarMonth />
-    <Cancel />
-    <Category />
-    <Celebration />
-    <Chat />
-    <ChatBubble />
-    <Check />
-    <CheckCircle />
-    <CheckSmall />
-    <Checklist />
-    <ChevronLeft />
-    <ChevronRight />
-    <ChildCare />
-    <CloseSmall />
-    <Cloud />
-    <CloudAlert />
-    <CloudDone />
-    <Code />
-    <CodeBlocks />
-    <Commit />
-    <ContentCopy />
-    <ContentCut />
-    <ContentPaste />
-    <CreditCard />
-    <Dangerous />
-    <DarkMode />
-    <Dashboard />
-    <DataObject />
-    <Database />
-    <Delete />
-    <Description />
-    <DirectionsCar />
-    <Download />
-    <DownloadDone />
-    <Draft />
-    <DragIndicator />
-    <E911Emergency />
-    <EmergencyHome />
-    <Encrypted />
-    <Enterprise />
-    <Error />
-    <Exercise />
-    <Explore />
-    <FamilyHistory />
-    <Favorite />
-    <FilterAlt />
-    <FilterList />
-    <FinanceMode />
-    <FirstPage />
-    <Flag2 />
-    <Flag />
-    <Folder />
-    <FolderClose />
-    <FolderData />
-    <FolderOpen />
-    <FolderUpload />
-    <Graph1 />
-    <Graph2 />
-    <GridView />
-    <Group />
-    <GroupAdd />
-    <Groups />
-    <Healing />
-    <Help />
-    <History />
-    <Home />
-    <HomeStorage />
-    <HomeWork />
-    <HourglassEmpty />
-    <Imagesmode />
-    <Info />
-    <IssueTypeEnhancement />
-    <IssueTypeFeature />
-    <IssueTypeIncident />
-    <IssueTypeIssue />
-    <IssueTypeKeyresult />
-    <IssueTypeMaintenance />
-    <IssueTypeObjective />
-    <IssueTypeRequirements />
-    <IssueTypeTask />
-    <IssueTypeTestCase />
-    <IssueTypeTicket />
-    <Iteration />
-    <Keep />
-    <KeepOff />
-    <Key />
-    <KeyOff />
-    <KeyVertical />
-    <Keyboard />
-    <KeyboardArrowDown />
-    <KeyboardArrowLeft />
-    <KeyboardArrowRight />
-    <KeyboardArrowUp />
-    <KeyboardCapslock />
-    <KeyboardCommandKey />
-    <KeyboardOptionKey />
-    <KeyboardTab />
-    <KeyboardTabRtl />
-    <Language />
-    <LastPage />
-    <Leaderboard />
-    <Lightbulb />
-    <Link />
-    <LinkOff />
-    <LocalFireDepartment />
-    <LocationOn />
-    <Lock />
-    <LockOpen />
-    <LockOpenRight />
-    <Login />
-    <Logout />
-    <Luggage />
-    <Mail />
-    <Mic />
-    <Monitoring />
-    <Mood />
-    <MoodBad />
-    <MoreHoriz />
-    <MoreVert />
-    <Notifications />
-    <Numbers />
-    <OpenInFull />
-    <OpenInNew />
-    <Pending />
-    <Person />
-    <PhotoCamera />
-    <PieChart />
-    <Power />
-    <PowerOff />
-    <ProgressActivity />
-    <Psychiatry />
-    <Redo />
-    <Refresh />
-    <RegularExpression />
-    <Replay />
-    <Report />
-    <RocketLaunch />
-    <Save />
-    <ScanDelete />
-    <Schedule />
-    <School />
-    <Search />
-    <SentimentDissatisfied />
-    <SentimentExtremelyDissatisfied />
-    <SentimentNeutral />
-    <SentimentSatisfied />
-    <SentimentVeryDissatisfied />
-    <SentimentVerySatisfied />
-    <Settings />
-    <Share />
-    <Shift />
-    <ShiftLock />
-    <ShiftLockOff />
-    <Shoppingmode />
-    <Sick />
-    <Sms />
-    <Sort />
-    <SpaceBar />
-    <Speed />
-    <Stacks />
-    <StickyNote2 />
-    <Stylus />
-    <Support />
-    <SwapVert />
-    <Sync />
-    <TableChart />
-    <TableChartView />
-    <Target />
-    <ThumbDown />
-    <ThumbUp />
-    <Timer />
-    <TrendingDown />
-    <TrendingUp />
-    <Trophy />
-    <Undo />
-    <UnfoldLess />
-    <UnfoldMore />
-    <UploadFile />
-    <Vaccines />
-    <VerifiedUser />
-    <ViewKanban />
-    <ViewWeek />
-    <Visibility />
-    <VisibilityOff />
-    <VitalSigns />
-    <Warning />
-  </div>
-);
+export const icons = {
+  AccountCircle,
+  AccountTree,
+  Acute,
+  Add2,
+  Add,
+  AddReaction,
+  AreaChart,
+  ArrowDropDown,
+  ArrowDropUp,
+  ArrowLeft,
+  ArrowRight,
+  AutoAwesomeMotion,
+  Backspace,
+  BarChart,
+  BeachAccess,
+  Block,
+  Book,
+  Bookmark,
+  BookmarkAdd,
+  BookmarkRemove,
+  BugReport,
+  BusinessCenter,
+  CalendarAddOn,
+  CalendarMonth,
+  Cancel,
+  Category,
+  Celebration,
+  Chat,
+  ChatBubble,
+  Check,
+  CheckCircle,
+  CheckSmall,
+  Checklist,
+  ChevronLeft,
+  ChevronRight,
+  ChildCare,
+  CloseSmall,
+  Cloud,
+  CloudAlert,
+  CloudDone,
+  Code,
+  CodeBlocks,
+  Commit,
+  ContentCopy,
+  ContentCut,
+  ContentPaste,
+  CreditCard,
+  Dangerous,
+  DarkMode,
+  Dashboard,
+  DataObject,
+  Database,
+  Delete,
+  Description,
+  DirectionsCar,
+  Download,
+  DownloadDone,
+  Draft,
+  DragIndicator,
+  E911Emergency,
+  EmergencyHome,
+  Encrypted,
+  Enterprise,
+  Error,
+  Exercise,
+  Explore,
+  FamilyHistory,
+  Favorite,
+  FilterAlt,
+  FilterList,
+  FinanceMode,
+  FirstPage,
+  Flag2,
+  Flag,
+  Folder,
+  FolderClose,
+  FolderData,
+  FolderOpen,
+  FolderUpload,
+  Graph1,
+  Graph2,
+  GridView,
+  Group,
+  GroupAdd,
+  Groups,
+  Healing,
+  Help,
+  History,
+  Home,
+  HomeStorage,
+  HomeWork,
+  HourglassEmpty,
+  Imagesmode,
+  Info,
+  IssueTypeEnhancement,
+  IssueTypeFeature,
+  IssueTypeIncident,
+  IssueTypeIssue,
+  IssueTypeKeyresult,
+  IssueTypeMaintenance,
+  IssueTypeObjective,
+  IssueTypeRequirements,
+  IssueTypeTask,
+  IssueTypeTestCase,
+  IssueTypeTicket,
+  Iteration,
+  Keep,
+  KeepOff,
+  Key,
+  KeyOff,
+  KeyVertical,
+  Keyboard,
+  KeyboardArrowDown,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  KeyboardArrowUp,
+  KeyboardCapslock,
+  KeyboardCommandKey,
+  KeyboardOptionKey,
+  KeyboardTab,
+  KeyboardTabRtl,
+  Language,
+  LastPage,
+  Leaderboard,
+  Lightbulb,
+  Link,
+  LinkOff,
+  LocalFireDepartment,
+  LocationOn,
+  Lock,
+  LockOpen,
+  LockOpenRight,
+  Login,
+  Logout,
+  Luggage,
+  Mail,
+  Mic,
+  Monitoring,
+  Mood,
+  MoodBad,
+  MoreHoriz,
+  MoreVert,
+  Notifications,
+  Numbers,
+  OpenInFull,
+  OpenInNew,
+  Pending,
+  Person,
+  PhotoCamera,
+  PieChart,
+  Power,
+  PowerOff,
+  ProgressActivity,
+  Psychiatry,
+  Redo,
+  Refresh,
+  RegularExpression,
+  Replay,
+  Report,
+  RocketLaunch,
+  Save,
+  ScanDelete,
+  Schedule,
+  School,
+  Search,
+  SentimentDissatisfied,
+  SentimentExtremelyDissatisfied,
+  SentimentNeutral,
+  SentimentSatisfied,
+  SentimentVeryDissatisfied,
+  SentimentVerySatisfied,
+  Settings,
+  Share,
+  Shift,
+  ShiftLock,
+  ShiftLockOff,
+  ShoppingMode,
+  Sick,
+  Sms,
+  Sort,
+  SpaceBar,
+  Speed,
+  Stacks,
+  StickyNote2,
+  Stylus,
+  Support,
+  SwapVert,
+  Sync,
+  TableChart,
+  TableChartView,
+  Target,
+  ThumbDown,
+  ThumbUp,
+  Timer,
+  TrendingDown,
+  TrendingUp,
+  Trophy,
+  Undo,
+  UnfoldLess,
+  UnfoldMore,
+  UploadFile,
+  Vaccines,
+  VerifiedUser,
+  ViewKanban,
+  ViewWeek,
+  Visibility,
+  VisibilityOff,
+  VitalSigns,
+  Warning,
+};
+
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  name: keyof typeof icons;
+  size?: "sm" | "md" | "lg";
+}
+
+export const Icon: React.FC<IconProps> = ({
+  name,
+  size,
+  width,
+  height,
+  ...props
+}) => {
+  const IconComponent = icons[name];
+
+  if (!IconComponent) {
+    console.warn(`Icon "${name}" не найден.`);
+    return null;
+  }
+
+  const sizeMap: Record<NonNullable<IconProps["size"]>, string> = {
+    sm: "12px",
+    md: "16px",
+    lg: "24px",
+  };
+
+  const computedSize = size ? sizeMap[size] : "1em";
+
+  const finalWidth = width || computedSize;
+  const finalHeight = height || computedSize;
+
+  return <IconComponent width={finalWidth} height={finalHeight} {...props} />;
+};
 
 export default Icon;
