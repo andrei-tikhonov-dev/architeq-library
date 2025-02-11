@@ -1,4 +1,5 @@
 import { StatusLine } from "./index";
+import statuses from "../../contstants/statuses";
 
 export default {
   title: "Components/StatusLine",
@@ -8,8 +9,33 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
-    iconName: {
-      description: "The name of the Icon",
+    status: {
+      description: "The status type",
+      control: {
+        type: "select",
+        options: Object.keys(statuses),
+      },
+    },
+    title: {
+      description: "The title of the status",
+      control: {
+        type: "text",
+      },
+    },
+    description: {
+      description: "Optional description",
+      control: {
+        type: "text",
+      },
+    },
+    link: {
+      description: "Optional link",
+      control: {
+        type: "text",
+      },
+    },
+    toggleTip: {
+      description: "Optional tooltip",
       control: {
         type: "text",
       },
@@ -19,8 +45,10 @@ export default {
 
 export const StatusLineDefault = {
   args: {
-    iconName: "fa6/FaRegFlag",
-    value: "Test value",
-    name: "Test name",
+    status: "PlentyResources",
+    title: "Test title",
+    description: "Test description",
+    link: "#",
+    toggleTip: "Tooltip text",
   },
 };

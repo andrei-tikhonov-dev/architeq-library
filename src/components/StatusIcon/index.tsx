@@ -1,8 +1,10 @@
 import React from "react";
 
 import { Icon, IconName } from "../Icon";
-import { StatusType } from "../../contstants/statuses";
-import colors from "../../contstants/colors";
+import theme from "../../contstants/theme";
+import { StatusIconProps } from "./types";
+
+import { StatusType } from "../../types";
 
 export const statusIcons: Record<StatusType, IconName> = {
   Complete: "CheckCircle",
@@ -19,30 +21,30 @@ export const statusIcons: Record<StatusType, IconName> = {
 };
 
 export const statusColors: Record<StatusType, string> = {
-  Complete: colors.icons.success,
-  Good: colors.icons.info,
-  OnTrack: colors.icons.info,
-  Warning: colors.icons.warning,
-  Blocked: colors.icons.blocker,
-  Critical: colors.icons.danger,
-  ReadyForReview: colors.icons.info,
-  UnderControl: colors.icons.attention,
-  MonitorClosely: colors.icons.attention,
-  ExceededResources: colors.icons.danger,
-  PlentyResources: colors.icons.success,
+  Complete: theme.colors.statuses.success,
+  Good: theme.colors.statuses.info,
+  OnTrack: theme.colors.statuses.info,
+  Warning: theme.colors.statuses.warning,
+  Blocked: theme.colors.statuses.blocker,
+  Critical: theme.colors.statuses.danger,
+  ReadyForReview: theme.colors.statuses.info,
+  UnderControl: theme.colors.statuses.attention,
+  MonitorClosely: theme.colors.statuses.attention,
+  ExceededResources: theme.colors.statuses.danger,
+  PlentyResources: theme.colors.statuses.success,
 };
 
-export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: StatusType;
-  size?: "sm" | "md" | "lg";
-}
-
-export const StatusIcon: React.FC<IconProps> = ({ name, size }) => {
+export const StatusIcon: React.FC<StatusIconProps> = ({
+  name,
+  size,
+  ...props
+}) => {
   return (
     <Icon
       name={statusIcons[name]}
       style={{ color: statusColors[name] }}
       size={size}
+      {...props}
     />
   );
 };

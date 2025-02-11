@@ -1,7 +1,8 @@
 // @ts-ignore
 import React from "react";
 import { StatusIcon, statusIcons } from "./index";
-import { StatusType } from "../../contstants/statuses";
+
+import { StatusType } from "../../types";
 
 export default {
   title: "Components/StatusIcon",

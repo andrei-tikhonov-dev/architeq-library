@@ -1,10 +1,9 @@
+import { StatusType } from "../../types";
+
 export interface StatusLineProps {
-  name?: string;
-  value?: string;
-  iconName?: string;
+  status: StatusType;
+  title: string;
+  description?: string;
   link?: string;
-  fullLink?: string;
-  newTab?: boolean;
-  className?: string;
-  valueClassName?: string;
+  toggleTip?: string | string[];
 }

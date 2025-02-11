@@ -1,63 +1,66 @@
-import { css, cx } from "@emotion/css";
+import { css } from "@emotion/css";
 import React from "react";
 
-import { useStyles2, TextLink } from "@grafana/ui";
+import { useStyles2 } from "@grafana/ui";
 
 import { StatusLineProps } from "./types";
 import { StatusIcon } from "../StatusIcon";
+import Icon from "../Icon";
+import theme from "../../contstants/theme";
 
 const getStyles = () => ({
-  infoItem: css`
-    display: flex;
-    gap: 5px;
+  container: css`
+    color: ${theme.colors.text.default};
+    font-family: ${theme.fontFamily};
+    font-size: 14px;
+    line-height: 20px;
+  `,
+  icon: css`
+    align-self: center;
+  `,
+  title: css`
+    font-weight: 600;
+  `,
+  description: css`
+    color: ${theme.colors.text.light};
+    position: relative;
+
+    &::before {
+      content: "•";
+      color: ${theme.colors.text.light};
+      margin-right: ${theme.margins.default};
+    }
+  `,
+  link: css`
+    color: ${theme.colors.text.light};
+    display: inline-flex;
     align-items: center;
+    gap: ${theme.margins.small};
+  `,
+  linkIcon: css`
+    align-self: center;
   `,
 });
-
 export const StatusLine: React.FC<StatusLineProps> = ({
-  value,
-  valueClassName,
-  name,
-  iconName,
+  title,
+  status,
+  description,
   link,
-  newTab = false,
-  className,
-  fullLink,
 }) => {
   const styles = useStyles2(getStyles);
-
-  const linkTarget = newTab ? "_blank" : "_self";
-  const linkRel = newTab ? "noopener noreferrer" : undefined;
-  const CustomLink: any = TextLink;
-
-  const handleClick = () => {
-    if (!link || !fullLink) {
-      return;
-    }
-    if (newTab) {
-      window.open(link, "_blank");
-    } else {
-      window.location.href = link;
-    }
-  };
-
-  const renderContent = () => {
-    if (link && value && !fullLink) {
-      return (
-        <CustomLink href={link} target={linkTarget} rel={linkRel}>
-          {String(value)}
-        </CustomLink>
-      );
-    }
-
-    return <div className={valueClassName}>{value}</div>;
-  };
+  const linkComponent = link ? (
+    <a href={link} target="_blank" className={styles.link} rel="noreferrer">
+      <span>Learn more</span>
+      <Icon name="OpenInNew" size="md" className={styles.linkIcon} />
+    </a>
+  ) : null;
 
   return (
-    <div className={cx(styles.infoItem, className)} onClick={handleClick}>
-      {iconName && <StatusIcon iconName={iconName} />}
-      <strong>{name}</strong>
-      {renderContent()}
+    <div className={styles.container}>
+      <StatusIcon className={styles.icon} name={status} size="md" />
+      <span className={styles.title}>{title}</span>
+      {description && <span className={styles.description}>{description}</span>}
+      {linkComponent}
     </div>
   );
 };

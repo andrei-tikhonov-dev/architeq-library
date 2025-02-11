@@ -13,5 +13,3 @@ const statuses = {
 };
 
 export default statuses;
-
-export type StatusType = keyof typeof statuses;
