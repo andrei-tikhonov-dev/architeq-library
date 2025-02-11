@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Icon, IconName } from "../Icon";
-import { Status } from "../../contstants/statuses";
+import { StatusType } from "../../contstants/statuses";
 import colors from "../../contstants/colors";
 
-export const statusIcons: Record<Status, IconName> = {
+export const statusIcons: Record<StatusType, IconName> = {
   Complete: "CheckCircle",
   Good: "ThumbUp",
   OnTrack: "RocketLaunch",
@@ -18,7 +18,7 @@ export const statusIcons: Record<Status, IconName> = {
   PlentyResources: "Psychiatry",
 };
 
-export const statusColors: Record<Status, string> = {
+export const statusColors: Record<StatusType, string> = {
   Complete: colors.icons.success,
   Good: colors.icons.info,
   OnTrack: colors.icons.info,
@@ -33,7 +33,7 @@ export const statusColors: Record<Status, string> = {
 };
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: Status;
+  name: StatusType;
   size?: "sm" | "md" | "lg";
 }
 

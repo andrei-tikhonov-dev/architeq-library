@@ -1,4 +1,7 @@
+// @ts-ignore
+import React from "react";
 import { StatusIcon, statusIcons } from "./index";
+import { StatusType } from "../../contstants/statuses";
 
 export default {
   title: "Components/StatusIcon",
@@ -31,3 +34,21 @@ export const StatusIconExample = {
     size: "lg",
   },
 };
+
+export const AllStatusIcons = () => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gap: "16px",
+      textAlign: "center",
+    }}
+  >
+    {Object.keys(statusIcons).map((status) => (
+      <div key={status}>
+        <StatusIcon name={status as StatusType} size="lg" />
+        <div style={{ marginTop: "8px" }}>{status}</div>
+      </div>
+    ))}
+  </div>
+);

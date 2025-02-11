@@ -14,4 +14,4 @@ const statuses = {
 
 export default statuses;
 
-export type Status = keyof typeof statuses;
+export type StatusType = keyof typeof statuses;
