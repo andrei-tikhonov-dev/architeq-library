@@ -93,13 +93,13 @@ import Home from "./icons/Home";
 import HomeStorage from "./icons/HomeStorage";
 import HomeWork from "./icons/HomeWork";
 import HourglassEmpty from "./icons/HourglassEmpty";
-import Imagesmode from "./icons/Imagesmode";
+import ImagesMode from "./icons/Imagesmode";
 import Info from "./icons/Info";
 import IssueTypeEnhancement from "./icons/IssueTypeEnhancement";
 import IssueTypeFeature from "./icons/IssueTypeFeature";
 import IssueTypeIncident from "./icons/IssueTypeIncident";
 import IssueTypeIssue from "./icons/IssueTypeIssue";
-import IssueTypeKeyresult from "./icons/IssueTypeKeyresult";
+import IssueTypeKeyResult from "./icons/IssueTypeKeyResult";
 import IssueTypeMaintenance from "./icons/IssueTypeMaintenance";
 import IssueTypeObjective from "./icons/IssueTypeObjective";
 import IssueTypeRequirements from "./icons/IssueTypeRequirements";
@@ -304,13 +304,13 @@ export const icons = {
   HomeStorage,
   HomeWork,
   HourglassEmpty,
-  Imagesmode,
+  Imagesmode: ImagesMode,
   Info,
   IssueTypeEnhancement,
   IssueTypeFeature,
   IssueTypeIncident,
   IssueTypeIssue,
-  IssueTypeKeyresult,
+  IssueTypeKeyResult,
   IssueTypeMaintenance,
   IssueTypeObjective,
   IssueTypeRequirements,
@@ -423,8 +423,10 @@ export const icons = {
   Warning,
 };
 
+export type IconName = keyof typeof icons;
+
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: keyof typeof icons;
+  name: IconName;
   size?: "sm" | "md" | "lg";
 }
 

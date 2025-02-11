@@ -1,38 +1,48 @@
-import { css } from "@emotion/css";
-import cn from "classnames";
 import React from "react";
 
-import { GrafanaTheme2 } from "@grafana/data";
-import { useStyles2 } from "@grafana/ui";
-import { Icon } from "../Icon";
-import { InfoIconProps } from "./types";
+import { Icon, IconName } from "../Icon";
+import { Status } from "../../contstants/statuses";
+import colors from "../../contstants/colors";
 
-const getStyles = (theme: GrafanaTheme2) => {
-  return {
-    status: css`
-      display: flex;
-      align-self: center;
-    `,
-    ok: css`
-      color: ${theme.colors.success.text};
-    `,
-    warning: css`
-      color: ${theme.colors.warning.text};
-    `,
-    critical: css`
-      color: ${theme.colors.error.text};
-    `,
-  };
+export const statusIcons: Record<Status, IconName> = {
+  Complete: "CheckCircle",
+  Good: "ThumbUp",
+  OnTrack: "RocketLaunch",
+  Warning: "Warning",
+  Blocked: "Block",
+  Critical: "Error",
+  ReadyForReview: "Visibility",
+  UnderControl: "Leaderboard",
+  MonitorClosely: "Schedule",
+  ExceededResources: "Cancel",
+  PlentyResources: "Psychiatry",
 };
 
-export const StatusIcon: React.FC<InfoIconProps> = ({ iconName }) => {
-  const styles = useStyles2(getStyles);
+export const statusColors: Record<Status, string> = {
+  Complete: colors.icons.success,
+  Good: colors.icons.info,
+  OnTrack: colors.icons.info,
+  Warning: colors.icons.warning,
+  Blocked: colors.icons.blocker,
+  Critical: colors.icons.danger,
+  ReadyForReview: colors.icons.info,
+  UnderControl: colors.icons.attention,
+  MonitorClosely: colors.icons.attention,
+  ExceededResources: colors.icons.danger,
+  PlentyResources: colors.icons.success,
+};
 
-  const statusClass = cn(styles.status, {
-    [styles.ok]: iconName === "a",
-    [styles.warning]: iconName === "b",
-    [styles.critical]: iconName === "c",
-  });
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  name: Status;
+  size?: "sm" | "md" | "lg";
+}
 
-  return <span className={statusClass}>{iconName && <Icon />}</span>;
+export const StatusIcon: React.FC<IconProps> = ({ name, size }) => {
+  return (
+    <Icon
+      name={statusIcons[name]}
+      style={{ color: statusColors[name] }}
+      size={size}
+    />
+  );
 };

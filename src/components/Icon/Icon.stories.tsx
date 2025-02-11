@@ -18,8 +18,8 @@ export const AllIcons = () => {
           key={name}
           style={{
             textAlign: "center",
-            border: "1px solid #bbb",
             padding: "40px 20px",
+            width: "19%",
           }}
         >
           <div

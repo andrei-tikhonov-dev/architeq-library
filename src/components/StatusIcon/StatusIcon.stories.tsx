@@ -1,4 +1,4 @@
-import { StatusIcon } from "./index";
+import { StatusIcon, statusIcons } from "./index";
 
 export default {
   title: "Components/StatusIcon",
@@ -8,17 +8,26 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
-    iconName: {
+    name: {
       description: "The name of the Icon",
       control: {
-        type: "text",
+        type: "select",
+        options: Object.keys(statusIcons),
+      },
+    },
+    size: {
+      description: "Size of the Icon",
+      control: {
+        type: "select",
+        options: ["sm", "md", "lg"],
       },
     },
   },
 };
 
-export const IconFaRegFlagCritical = {
+export const StatusIconExample = {
   args: {
-    iconName: "fa6/FaRegFlag",
+    name: "PlentyResources",
+    size: "lg",
   },
 };
