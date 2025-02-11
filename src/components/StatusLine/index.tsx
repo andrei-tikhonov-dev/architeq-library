@@ -7,6 +7,7 @@ import { StatusLineProps } from "./types";
 import { StatusIcon } from "../StatusIcon";
 import Icon from "../Icon";
 import theme from "../../contstants/theme";
+import IconButton from "../IconButton";
 
 const getStyles = () => ({
   container: css`
@@ -16,14 +17,16 @@ const getStyles = () => ({
     line-height: 20px;
   `,
   icon: css`
-    align-self: center;
+    margin-right: ${theme.margins.default}; /* Отступ после иконки */
+    margin-bottom: -4px;
   `,
   title: css`
     font-weight: 600;
+    margin-right: ${theme.margins.default}; /* Отступ после заголовка */
   `,
   description: css`
     color: ${theme.colors.text.light};
-    position: relative;
+    margin-right: ${theme.margins.default}; /* Отступ после описания */
 
     &::before {
       content: "•";
@@ -33,19 +36,22 @@ const getStyles = () => ({
   `,
   link: css`
     color: ${theme.colors.text.light};
-    display: inline-flex;
-    align-items: center;
-    gap: ${theme.margins.small};
+    &:hover {
+      color: ${theme.colors.text.default};
+    }
   `,
   linkIcon: css`
-    align-self: center;
+    margin-left: ${theme.margins.small};
+    margin-bottom: -4px;
   `,
 });
+
 export const StatusLine: React.FC<StatusLineProps> = ({
   title,
   status,
   description,
   link,
+  toggleTip,
 }) => {
   const styles = useStyles2(getStyles);
   const linkComponent = link ? (
@@ -60,7 +66,7 @@ export const StatusLine: React.FC<StatusLineProps> = ({
       <StatusIcon className={styles.icon} name={status} size="md" />
       <span className={styles.title}>{title}</span>
       {description && <span className={styles.description}>{description}</span>}
-      {linkComponent}
+      {toggleTip ? <IconButton name="MoreHoriz" /> : linkComponent}
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Icon, IconName } from "../Icon";
+import { Icon } from "../Icon";
 import theme from "../../contstants/theme";
 import { StatusIconProps } from "./types";
 
-import { StatusType } from "../../types";
+import { IconNameType, StatusType } from "../../types";
 
-export const statusIcons: Record<StatusType, IconName> = {
+export const statusIcons: Record<StatusType, IconNameType> = {
   Complete: "CheckCircle",
   Good: "ThumbUp",
   OnTrack: "RocketLaunch",

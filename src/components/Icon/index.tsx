@@ -210,6 +210,7 @@ import Visibility from "./icons/Visibility";
 import VisibilityOff from "./icons/VisibilityOff";
 import VitalSigns from "./icons/VitalSigns";
 import Warning from "./icons/Warning";
+import { IconNameType } from "../../types";
 
 export const icons = {
   AccountCircle,
@@ -423,10 +424,8 @@ export const icons = {
   Warning,
 };
 
-export type IconName = keyof typeof icons;
-
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: IconName;
+  name: IconNameType;
   size?: "sm" | "md" | "lg";
 }
 
