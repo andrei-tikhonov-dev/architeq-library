@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import React from "react";
 
-import { useStyles2 } from "@grafana/ui";
+import { Toggletip, useStyles2 } from "@grafana/ui";
 
 import { StatusLineProps } from "./types";
 import { StatusIcon } from "../StatusIcon";
@@ -66,7 +66,20 @@ export const StatusLine: React.FC<StatusLineProps> = ({
       <StatusIcon className={styles.icon} name={status} size="md" />
       <span className={styles.title}>{title}</span>
       {description && <span className={styles.description}>{description}</span>}
-      {toggleTip ? <IconButton name="MoreHoriz" /> : linkComponent}
+      {toggleTip ? (
+        <Toggletip
+          content={
+            <>
+              {<div>{toggleTip}</div>}
+              {<div>{linkComponent}</div>}
+            </>
+          }
+        >
+          <IconButton name="MoreHoriz" size="sm" variant="primary" />
+        </Toggletip>
+      ) : (
+        linkComponent
+      )}
     </div>
   );
 };

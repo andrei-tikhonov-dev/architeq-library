@@ -1,9 +1,11 @@
 // @ts-ignore
 import React from "react";
+import { Meta, StoryFn } from "@storybook/react";
 import { IconButton } from ".";
+import { IconButtonProps } from "./types";
 
 export default {
-  title: "Components/Icon",
+  title: "Components/IconButton",
   component: IconButton,
   parameters: {
     layout: "centered",
@@ -17,11 +19,56 @@ export default {
       },
     },
     size: {
-      description: "Size of the Icon",
+      description: "Size of the button",
       control: {
         type: "select",
         options: ["sm", "md", "lg"],
       },
     },
+    variant: {
+      description: "Button variant",
+      control: {
+        type: "select",
+        options: ["primary", "destructive", "tinted"],
+      },
+    },
+    disabled: {
+      description: "Disabled state",
+      control: {
+        type: "boolean",
+      },
+    },
+    onClick: { action: "clicked" },
   },
+} as Meta<IconButtonProps>;
+
+const Template: StoryFn<IconButtonProps> = (args) => <IconButton {...args} />;
+
+export const Primary = Template.bind({});
+Primary.args = {
+  name: "Save",
+  size: "lg",
+  variant: "primary",
+};
+
+export const Destructive = Template.bind({});
+Destructive.args = {
+  name: "Delete",
+  size: "lg",
+  variant: "destructive",
+};
+
+export const Tinted = Template.bind({});
+Tinted.args = {
+  name: "Settings",
+  size: "lg",
+  variant: "tinted",
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  name: "Block",
+  size: "lg",
+  variant: "primary",
+  disabled: true,
 };

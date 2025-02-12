@@ -8,6 +8,14 @@ const theme = {
     text: {
       default: "#212226",
       light: "#7A7A7D",
+      primary: "#212226",
+      tinted: "#8A0E13",
+      destructive: "#8F1847",
+    },
+    button: {
+      primary: "#EDEDEE",
+      tinted: "#FDEAE6",
+      destructive: "#FEEAEC",
     },
     statuses: {
       success: "#2DA222", // Green — indicates successful completion
@@ -17,6 +25,9 @@ const theme = {
       blocker: "#760E41", // Dark red — represents a blocking status
       attention: "#391AB3", // Purple — requires attention or monitoring
     },
+  },
+  radius: {
+    button: "2px",
   },
 };
 export default theme;

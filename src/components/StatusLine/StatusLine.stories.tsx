@@ -1,3 +1,5 @@
+// @ts-ignore
+import React from "react";
 import { StatusLine } from "./index";
 import statuses from "../../contstants/statuses";
 
@@ -52,3 +54,9 @@ export const StatusLineDefault = {
     toggleTip: "Tooltip text",
   },
 };
+
+export const StatusLineWithContainer = () => (
+  <div style={{ minHeight: "500px" }}>
+    <StatusLine status="Good" title="Title" toggleTip="Help text" />
+  </div>
+);
