@@ -18,7 +18,7 @@ const getStyles = () => ({
   `,
   icon: css`
     margin-right: ${theme.margins.default}; /* Отступ после иконки */
-    margin-bottom: -4px;
+    margin-bottom: -2px;
   `,
   title: css`
     font-weight: 600;
