@@ -47,7 +47,11 @@ export default {
   },
 } as Meta<StatusLineProps>;
 
-const Template: StoryFn<StatusLineProps> = (args) => <StatusLine {...args} />;
+const Template: StoryFn<StatusLineProps> = (args) => (
+  <div style={{ minHeight: 400 }}>
+    <StatusLine {...args} />
+  </div>
+);
 
 const exampleToggleTip = [
   { text: "This is a primary tip", link: "#" },

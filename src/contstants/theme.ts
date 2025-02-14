@@ -4,6 +4,11 @@ const theme = {
     default: "8px",
     small: "4px",
   },
+  spacing: {
+    sm: "4px",
+    md: "8px",
+    lg: "16px",
+  },
   colors: {
     text: {
       default: "#212226",
@@ -25,9 +30,34 @@ const theme = {
       blocker: "#760E41", // Dark red — represents a blocking status
       attention: "#391AB3", // Purple — requires attention or monitoring
     },
+    background: {
+      primary: "#FFFFFF",
+      secondary: "#F4F5F7",
+      overlay: "rgba(0, 0, 0, 0.1)",
+    },
   },
   radius: {
     button: "2px",
+    sm: "4px",
+    md: "8px",
+  },
+  border: {
+    radius: {
+      sm: "4px",
+      md: "8px",
+    },
+  },
+  shadows: {
+    sm: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    md: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+  },
+  typography: {
+    size: {
+      sm: "12px",
+      md: "14px",
+      lg: "16px",
+    },
   },
 };
+
 export default theme;

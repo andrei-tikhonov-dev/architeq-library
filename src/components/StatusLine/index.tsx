@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import React from "react";
 
-import { Toggletip, useStyles2 } from "@grafana/ui";
+import { useStyles2 } from "@grafana/ui";
 
 import { StatusLineProps } from "./types";
 import { StatusIcon } from "../StatusIcon";
@@ -9,6 +9,7 @@ import Icon from "../Icon";
 import theme from "../../contstants/theme";
 import IconButton from "../IconButton";
 import { TooltipLine } from "../TooltipLine";
+import { ToggleTip } from "../ToggleTip";
 
 const getStyles = () => ({
   container: css`
@@ -75,9 +76,9 @@ export const StatusLine: React.FC<StatusLineProps> = ({
       <span className={styles.title}>{title}</span>
       {description && <span className={styles.description}>{description}</span>}
       {toggleTip.length > 0 ? (
-        <Toggletip content={<>{toggleTipContent}</>}>
+        <ToggleTip content={toggleTipContent}>
           <IconButton name="MoreHoriz" size="sm" variant="primary" />
-        </Toggletip>
+        </ToggleTip>
       ) : (
         linkComponent
       )}
