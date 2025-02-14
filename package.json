@@ -1,6 +1,6 @@
 {
   "name": "architeq-library",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Components and hooks library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
