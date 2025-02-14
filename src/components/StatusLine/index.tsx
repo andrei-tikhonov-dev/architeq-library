@@ -8,6 +8,7 @@ import { StatusIcon } from "../StatusIcon";
 import Icon from "../Icon";
 import theme from "../../contstants/theme";
 import IconButton from "../IconButton";
+import { TooltipLine } from "../TooltipLine";
 
 const getStyles = () => ({
   container: css`
@@ -51,7 +52,7 @@ export const StatusLine: React.FC<StatusLineProps> = ({
   status,
   description,
   link,
-  toggleTip,
+  toggleTip = [],
 }) => {
   const styles = useStyles2(getStyles);
   const linkComponent = link ? (
@@ -61,20 +62,20 @@ export const StatusLine: React.FC<StatusLineProps> = ({
     </a>
   ) : null;
 
+  const toggleTipContent = [
+    ...toggleTip.map(({ text, link }) => (
+      <TooltipLine key={text} text={text} link={link} />
+    )),
+    linkComponent,
+  ].filter(Boolean);
+
   return (
     <div className={styles.container}>
       <StatusIcon className={styles.icon} name={status} size="md" />
       <span className={styles.title}>{title}</span>
       {description && <span className={styles.description}>{description}</span>}
-      {toggleTip ? (
-        <Toggletip
-          content={
-            <>
-              {<div>{toggleTip}</div>}
-              {<div>{linkComponent}</div>}
-            </>
-          }
-        >
+      {toggleTip.length > 0 ? (
+        <Toggletip content={<>{toggleTipContent}</>}>
           <IconButton name="MoreHoriz" size="sm" variant="primary" />
         </Toggletip>
       ) : (
