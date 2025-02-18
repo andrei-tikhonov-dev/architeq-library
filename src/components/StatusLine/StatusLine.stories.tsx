@@ -48,7 +48,7 @@ export default {
 } as Meta<StatusLineProps>;
 
 const Template: StoryFn<StatusLineProps> = (args) => (
-  <div style={{ minHeight: 400 }}>
+  <div style={{ minHeight: 100 }}>
     <StatusLine {...args} />
   </div>
 );
