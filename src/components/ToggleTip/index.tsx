@@ -1,19 +1,17 @@
 import * as Popover from "@radix-ui/react-popover";
 import { css } from "@emotion/css";
-import React, { ReactNode } from "react";
+import React from "react";
 import { useStyles2 } from "@grafana/ui";
 import theme from "../../contstants/theme";
-
-interface ToggleTipProps {
-  content: string | ReactNode;
-  children: ReactNode;
-}
+import { ToggleTipProps } from "./types";
 
 const getStyles = () => ({
   container: css`
     background-color: ${theme.colors.background.primary};
     color: ${theme.colors.text.default};
-    padding: ${theme.spacing.sm} ${theme.spacing.md};
+    font-family: ${theme.fontFamily};
+    line-height: 20px;
+    padding: ${theme.spacing.lg} ${theme.spacing.lg};
     border-radius: ${theme.border.radius.sm};
     font-size: ${theme.typography.size.sm};
     box-shadow: ${theme.shadows.md};

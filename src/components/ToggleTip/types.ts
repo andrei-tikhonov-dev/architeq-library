@@ -1,4 +1,6 @@
-export interface TooltipLineProps {
-  text: string;
-  link?: string;
+import { ReactNode } from "react";
+
+export interface ToggleTipProps {
+  content: string | ReactNode;
+  children: ReactNode;
 }

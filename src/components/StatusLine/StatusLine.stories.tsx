@@ -54,37 +54,49 @@ const Template: StoryFn<StatusLineProps> = (args) => (
 );
 
 const exampleToggleTip = [
-  { text: "This is a primary tip", link: "#" },
-  { text: "Additional context available here", link: "#" },
-  { text: "Another important detail" },
+  { text: "Additional context available", link: "#" },
+  { text: "More details about the status", link: "#" },
 ];
 
-export const SprintSuccessfullyCompleted = Template.bind({});
-SprintSuccessfullyCompleted.args = {
-  status: "Complete",
-  title: "Sprint successfully completed",
-  description: "More than 80% of all committed tasks are completed.",
+/**
+ * 🏁 Sprint Planning
+ */
+export const SprintPlanning_Progressing = Template.bind({});
+SprintPlanning_Progressing.storyName = "Sprint progressing as planned";
+SprintPlanning_Progressing.args = {
+  status: "OnTrack",
+  title: "Sprint progressing as planned",
+  description:
+    "Tasks are being executed according to schedule with no major issues.",
   toggleTip: exampleToggleTip,
 };
 
-export const GoodSprint = Template.bind({});
-GoodSprint.args = {
-  status: "Good",
-  title: "Good sprint",
-  description: "Between 60% and 80% of all committed tasks are completed.",
-  toggleTip: exampleToggleTip,
-};
-
-export const ChallengingSprint = Template.bind({});
-ChallengingSprint.args = {
+export const SprintPlanning_ExternalDependencies = Template.bind({});
+SprintPlanning_ExternalDependencies.storyName =
+  "External dependencies impacting sprint";
+SprintPlanning_ExternalDependencies.args = {
   status: "Warning",
-  title: "Challenging sprint",
-  description: "Less than 60% of all committed tasks are completed.",
+  title: "External dependencies impacting sprint",
+  description: "Dependencies from other teams may affect sprint progress.",
   toggleTip: exampleToggleTip,
 };
 
-export const OnTrack = Template.bind({});
-OnTrack.args = {
+export const SprintPlanning_StoryPointsNotAssigned = Template.bind({});
+SprintPlanning_StoryPointsNotAssigned.storyName = "Story points not assigned";
+SprintPlanning_StoryPointsNotAssigned.args = {
+  status: "Blocked",
+  title: "Story points not assigned",
+  description:
+    "No story points have been assigned to sprint tasks, impacting planning accuracy.",
+  toggleTip: exampleToggleTip,
+};
+
+/**
+ * 🚀 Current Sprint
+ */
+export const CurrentSprint_OnTrack = Template.bind({});
+CurrentSprint_OnTrack.storyName = "On track";
+CurrentSprint_OnTrack.args = {
   status: "OnTrack",
   title: "On track",
   description:
@@ -92,33 +104,18 @@ OnTrack.args = {
   toggleTip: exampleToggleTip,
 };
 
-export const AtRisk = Template.bind({});
-AtRisk.args = {
+export const CurrentSprint_AtRisk = Template.bind({});
+CurrentSprint_AtRisk.storyName = "At risk";
+CurrentSprint_AtRisk.args = {
   status: "Warning",
   title: "At risk",
   description: "Certain tasks or dependencies may cause delays in the sprint.",
   toggleTip: exampleToggleTip,
 };
 
-export const Blocked = Template.bind({});
-Blocked.args = {
-  status: "Blocked",
-  title: "Blocked",
-  description:
-    "Critical issues are preventing one or more tasks from progressing.",
-  toggleTip: exampleToggleTip,
-};
-
-export const ReadyForReview = Template.bind({});
-ReadyForReview.args = {
-  status: "ReadyForReview",
-  title: "Ready for review",
-  description: "Tasks are complete and ready for peer review or testing.",
-  toggleTip: exampleToggleTip,
-};
-
-export const Completed = Template.bind({});
-Completed.args = {
+export const CurrentSprint_Completed = Template.bind({});
+CurrentSprint_Completed.storyName = "Completed";
+CurrentSprint_Completed.args = {
   status: "Complete",
   title: "Completed",
   description:
@@ -126,44 +123,75 @@ Completed.args = {
   toggleTip: exampleToggleTip,
 };
 
-export const OverBudget = Template.bind({});
-OverBudget.args = {
+/**
+ * 💰 Budget
+ */
+export const Budget_OnTrack = Template.bind({});
+Budget_OnTrack.storyName = "On track";
+Budget_OnTrack.args = {
+  status: "OnTrack",
+  title: "On track",
+  description: "7.6k of 80.0k has been spent (9.5%).",
+  toggleTip: exampleToggleTip,
+};
+
+export const Budget_AtRisk = Template.bind({});
+Budget_AtRisk.storyName = "At risk";
+Budget_AtRisk.args = {
+  status: "Warning",
+  title: "At risk",
+  description: "65.0k of 80.0k has been spent (81.25%).",
+  toggleTip: exampleToggleTip,
+};
+
+export const Budget_OverBudget = Template.bind({});
+Budget_OverBudget.storyName = "Over budget";
+Budget_OverBudget.args = {
   status: "ExceededResources",
   title: "Over budget",
-  description: "85.0k of 80.0k has been spent (106.25%)",
+  description: "85.0k of 80.0k has been spent (106.25%).",
   toggleTip: exampleToggleTip,
 };
 
-export const ExceededResources = Template.bind({});
-ExceededResources.args = {
+/**
+ * 🔧 Resources
+ */
+export const Resources_Available = Template.bind({});
+Resources_Available.storyName = "Plenty of resources available";
+Resources_Available.args = {
+  status: "PlentyResources",
+  title: "Plenty of resources available",
+  description: "100 HRS of 1.0k HRS has been spent (10%).",
+  toggleTip: exampleToggleTip,
+};
+
+export const Resources_Exceeded = Template.bind({});
+Resources_Exceeded.storyName = "Exceeded resources";
+Resources_Exceeded.args = {
   status: "ExceededResources",
   title: "Exceeded resources",
-  description: "1.1k HRS of 1.0k HRS has been spent (110%)",
+  description: "1.1k HRS of 1.0k HRS has been spent (110%).",
   toggleTip: exampleToggleTip,
 };
 
-export const PIOnTrack = Template.bind({});
-PIOnTrack.args = {
+/**
+ * 📊 PI Monitoring
+ */
+export const PI_OnTrack = Template.bind({});
+PI_OnTrack.storyName = "PI On track";
+PI_OnTrack.args = {
   status: "OnTrack",
   title: "On track",
   description:
-    "PI progress is moving according to the timeline and estimated effort",
+    "PI progress is moving according to the timeline and estimated effort.",
   toggleTip: exampleToggleTip,
 };
 
-export const PIAtRisk = Template.bind({});
-PIAtRisk.args = {
-  status: "Warning",
-  title: "At risk",
-  description:
-    "PI objectives are at risk due to delays, resource issues, or dependencies",
-  toggleTip: exampleToggleTip,
-};
-
-export const PIBlocked = Template.bind({});
-PIBlocked.args = {
+export const PI_Blocked = Template.bind({});
+PI_Blocked.storyName = "PI Blocked";
+PI_Blocked.args = {
   status: "Blocked",
   title: "Blocked",
-  description: "Major blockers are preventing further progress on PI tasks",
+  description: "Major blockers are preventing further progress on PI tasks.",
   toggleTip: exampleToggleTip,
 };
