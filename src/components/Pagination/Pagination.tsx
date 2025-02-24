@@ -20,11 +20,20 @@ const getStyles = () => ({
   container: css`
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding: ${theme.spacing.md} ${theme.spacing.lg};
-    gap: ${theme.spacing.md};
+    justify-content: space-between;
+    padding: ${theme.spacing.lg} 0;
     color: ${theme.colors.text.default};
     font-family: ${theme.fontFamily};
+  `,
+  leftSection: css`
+    display: flex;
+    align-items: center;
+    gap: ${theme.spacing.md};
+  `,
+  rightSection: css`
+    display: flex;
+    align-items: center;
+    gap: ${theme.spacing.md};
   `,
   select: css`
     padding: ${theme.spacing.sm} ${theme.spacing.md};
@@ -40,7 +49,6 @@ const getStyles = () => ({
   `,
   info: css`
     color: ${theme.colors.text.light};
-    font-size: ${theme.typography.size.sm};
   `,
 });
 
@@ -64,55 +72,57 @@ export function Pagination({
 
   return (
     <div className={css([styles.container, className])}>
-      {showPageSize && onPageSizeChange && (
-        <select
-          className={styles.select}
-          value={pageSize}
-          onChange={(e) => onPageSizeChange(Number(e.target.value))}
-        >
-          {pageSizeOptions.map((size) => (
-            <option key={size} value={size}>
-              {size} rows
-            </option>
-          ))}
-        </select>
-      )}
+      <div className={styles.leftSection}>
+        {showPageSize && onPageSizeChange && (
+          <select
+            className={styles.select}
+            value={pageSize}
+            onChange={(e) => onPageSizeChange(Number(e.target.value))}
+          >
+            {pageSizeOptions.map((size) => (
+              <option key={size} value={size}>
+                {size} items
+              </option>
+            ))}
+          </select>
+        )}
 
-      {totalItems && (
-        <span className={styles.info}>Total items: {totalItems}</span>
-      )}
+        {totalItems && <span className={styles.info}>Total: {totalItems}</span>}
+      </div>
 
-      <IconButton
-        name="FirstPage"
-        size="sm"
-        onClick={() => onPageChange(1)}
-        disabled={isFirstPage}
-        aria-label="Go to first page"
-      />
-      <IconButton
-        name="ChevronLeft"
-        size="sm"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={isFirstPage}
-        aria-label="Go to previous page"
-      />
-      <span>
-        Page {currentPage} of {totalPages}
-      </span>
-      <IconButton
-        name="ChevronRight"
-        size="sm"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={isLastPage}
-        aria-label="Go to next page"
-      />
-      <IconButton
-        name="LastPage"
-        size="sm"
-        onClick={() => onPageChange(totalPages)}
-        disabled={isLastPage}
-        aria-label="Go to last page"
-      />
+      <div className={styles.rightSection}>
+        <IconButton
+          name="FirstPage"
+          size="sm"
+          onClick={() => onPageChange(1)}
+          disabled={isFirstPage}
+          aria-label="Go to first page"
+        />
+        <IconButton
+          name="ChevronLeft"
+          size="sm"
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={isFirstPage}
+          aria-label="Go to previous page"
+        />
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <IconButton
+          name="ChevronRight"
+          size="sm"
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={isLastPage}
+          aria-label="Go to next page"
+        />
+        <IconButton
+          name="LastPage"
+          size="sm"
+          onClick={() => onPageChange(totalPages)}
+          disabled={isLastPage}
+          aria-label="Go to last page"
+        />
+      </div>
     </div>
   );
 }
