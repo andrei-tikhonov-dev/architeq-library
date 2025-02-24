@@ -58,6 +58,169 @@ const theme = {
       lg: "16px",
     },
   },
+  buttons: {
+    sizes: {
+      sm: {
+        paddingX: "8px",
+        paddingY: "4px",
+        iconGap: "4px",
+      },
+      md: {
+        paddingX: "16px",
+        paddingY: "8px",
+        iconGap: "8px",
+      },
+      lg: {
+        paddingX: "24px",
+        paddingY: "12px",
+        iconGap: "12px",
+      },
+    },
+    solid: {
+      primary: {
+        background: {
+          default: "#EE522E",
+          hover: "#CC3421",
+          focus: "#EE522E",
+          active: "#AB1C17",
+          disabled: "#7A7A7D",
+        },
+        text: {
+          default: "#FFFFFF",
+          disabled: "#FFFFFF",
+        },
+      },
+      secondary: {
+        background: {
+          default: "#6634FA",
+          hover: "#4E26D7",
+          focus: "#6634FA",
+          active: "#391AB3",
+          disabled: "#7A7A7D",
+        },
+        text: {
+          default: "#FFFFFF",
+          disabled: "#FFFFFF",
+        },
+      },
+      destructive: {
+        background: {
+          default: "#F74C60",
+          hover: "#D43758",
+          focus: "#F74C60",
+          active: "#B12650",
+          disabled: "#7A7A7D",
+        },
+        text: {
+          default: "#FFFFFF",
+          disabled: "#FFFFFF",
+        },
+      },
+    },
+    outline: {
+      primary: {
+        background: {
+          default: "transparent",
+          hover: "#FEE9D5",
+          focus: "transparent",
+          active: "#FDCDAB",
+          disabled: "transparent",
+        },
+        border: {
+          default: "#EE522E",
+          hover: "#CC3421",
+          focus: "#EE522E",
+          active: "#AB1C17",
+          disabled: "#7A7A7D",
+        },
+        text: {
+          default: "#8A0E13",
+          disabled: "#7A7A7D",
+        },
+      },
+      secondary: {
+        background: {
+          default: "transparent",
+          hover: "#E4D6FE",
+          focus: "transparent",
+          active: "#C8ADFE",
+          disabled: "transparent",
+        },
+        border: {
+          default: "#6634FA",
+          hover: "#4E26D7",
+          focus: "#6634FA",
+          active: "#391AB3",
+          disabled: "#7A7A7D",
+        },
+        text: {
+          default: "#261090",
+          disabled: "#7A7A7D",
+        },
+      },
+      destructive: {
+        background: {
+          default: "transparent",
+          hover: "#FEEBEE",
+          focus: "transparent",
+          active: "#FDCED4",
+          disabled: "transparent",
+        },
+        border: {
+          default: "#F74C60",
+          hover: "#D43758",
+          focus: "#F74C60",
+          active: "#B12650",
+          disabled: "#7A7A7D",
+        },
+        text: {
+          default: "#8F1847",
+          disabled: "#7A7A7D",
+        },
+      },
+    },
+    ghost: {
+      primary: {
+        background: {
+          default: "transparent",
+          hover: "#FEE9D5",
+          focus: "transparent",
+          active: "#FDCDAB",
+          disabled: "transparent",
+        },
+        text: {
+          default: "#8A0E13",
+          disabled: "#7A7A7D",
+        },
+      },
+      secondary: {
+        background: {
+          default: "transparent",
+          hover: "#E4D6FE",
+          focus: "transparent",
+          active: "#C8ADFE",
+          disabled: "transparent",
+        },
+        text: {
+          default: "#261090",
+          disabled: "#7A7A7D",
+        },
+      },
+      destructive: {
+        background: {
+          default: "transparent",
+          hover: "#FEEBEE",
+          focus: "transparent",
+          active: "#FDCED4",
+          disabled: "transparent",
+        },
+        text: {
+          default: "#8F1847",
+          disabled: "#7A7A7D",
+        },
+      },
+    },
+  },
 };
 
 export default theme;
