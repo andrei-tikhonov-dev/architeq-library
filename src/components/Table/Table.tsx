@@ -17,7 +17,7 @@ import { css } from "@emotion/css";
 import Icon from "../Icon";
 import IconButton from "../IconButton";
 import theme from "../../contstants/theme";
-import { Pagination } from "../Pagination";
+import Pagination from "../Pagination";
 
 interface TableProps<T> {
   data: T[];
@@ -132,7 +132,7 @@ const getStyles = (striped?: boolean) => ({
   `,
 });
 
-export function Table<T extends object>({
+function Table<T extends object>({
   data,
   columns,
   enableSorting = true,
@@ -266,3 +266,5 @@ export function Table<T extends object>({
     </div>
   );
 }
+
+export default Table;

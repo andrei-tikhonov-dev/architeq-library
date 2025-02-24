@@ -40,13 +40,13 @@ const getStyles = () => ({
   range: css`
     position: absolute;
     height: 4px;
-    background: ${theme.colors.button.primary};
+    background: ${theme.colors.iconButton.primary};
     border-radius: ${theme.border.radius.sm};
   `,
   thumb: css`
     width: 16px;
     height: 16px;
-    background: ${theme.colors.button.primary};
+    background: ${theme.colors.iconButton.primary};
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid ${theme.colors.text.default};

@@ -2,7 +2,7 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Table } from "./index";
+import Table from "./Table";
 import theme from "../../contstants/theme";
 
 interface DataRow {

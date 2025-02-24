@@ -37,7 +37,11 @@ export const ToggleTip: React.FC<ToggleTipProps> = ({ content, children }) => {
       <Popover.Portal>
         <Popover.Content className={styles.container} sideOffset={5}>
           <Popover.Close asChild>
-            <IconButton className={styles.closeButton} name="CloseSmall" />
+            <IconButton
+              className={styles.closeButton}
+              size="sm"
+              name="CloseSmall"
+            />
           </Popover.Close>
           {content}
           <Popover.Arrow className={styles.arrow} />

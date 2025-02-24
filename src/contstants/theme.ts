@@ -17,7 +17,7 @@ const theme = {
       tinted: "#8A0E13",
       destructive: "#8F1847",
     },
-    button: {
+    iconButton: {
       primary: "#EDEDEE",
       tinted: "#FDEAE6",
       destructive: "#FEEAEC",
