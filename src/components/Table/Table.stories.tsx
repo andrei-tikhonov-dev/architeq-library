@@ -4,14 +4,22 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ColumnDef } from "@tanstack/react-table";
 import Table from "./Table";
 import theme from "../../contstants/theme";
+import Icon from "../Icon";
 
-interface DataRow {
+interface TeamMember {
   id: string;
   name: string;
-  age: number;
-  city: string | undefined;
   email: string;
-  status: "active" | "inactive" | "pending";
+  taskId: string;
+  taskTitle: string;
+  type: "Story" | "Bug";
+  status: "In Progress" | "Open" | "Closed";
+  role: string;
+  storyPoints: number;
+  inProgress: string;
+  workload: number;
+  workStartDate: string;
+  workEndDate: string;
 }
 
 const meta: Meta<typeof Table> = {
@@ -57,145 +65,196 @@ const meta: Meta<typeof Table> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Table<DataRow>>;
+type Story = StoryObj<typeof Table<TeamMember>>;
 
-const data: DataRow[] = [
+const teamData: TeamMember[] = [
   {
     id: "1",
-    name: "Alice Johnson",
-    age: 25,
-    city: "New York",
-    email: "alice@example.com",
-    status: "active",
+    name: "Alp",
+    email: "alp.bozaci@sbb.ch",
+    taskId: "Back-13678",
+    taskTitle: "Implement login security",
+    type: "Story",
+    status: "In Progress",
+    role: "BACKEND: 100%",
+    storyPoints: 3,
+    inProgress: "12 days",
+    workload: 100,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "2",
-    name: "Bob Smith",
-    age: 30,
-    city: "Los Angeles",
-    email: "bob@example.com",
-    status: "inactive",
+    name: "Sven",
+    email: "sven.birrer@sbb.ch",
+    taskId: "Back-13692",
+    taskTitle: "Fix authentication bug",
+    type: "Bug",
+    status: "Closed",
+    role: "BACKEND: 100%",
+    storyPoints: 2,
+    inProgress: "0 days",
+    workload: 100,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "3",
-    name: "Charlie Brown",
-    age: 28,
-    city: "Chicago",
-    email: "charlie@example.com",
-    status: "pending",
+    name: "Markus",
+    email: "markus.grabert@sbb.ch",
+    taskId: "Back-13706",
+    taskTitle: "Optimize database queries",
+    type: "Story",
+    status: "Open",
+    role: "BACKEND: 100%",
+    storyPoints: 5,
+    inProgress: "0 days",
+    workload: 100,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "4",
-    name: "David Wilson",
-    age: 35,
-    city: "Houston",
-    email: "david@example.com",
-    status: "active",
+    name: "Raoul",
+    email: "raoul.paerli@sbb.ch",
+    taskId: "Back-13707",
+    taskTitle: "Update user API documentation",
+    type: "Story",
+    status: "In Progress",
+    role: "BACKEND: 100%",
+    storyPoints: 1,
+    inProgress: "8 days",
+    workload: 90,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "5",
-    name: "Eva Martinez",
-    age: 27,
-    city: "Miami",
-    email: "eva@example.com",
-    status: "active",
+    name: "Riccardo",
+    email: "riccardo.gorza@sbb.ch",
+    taskId: "Back-13700",
+    taskTitle: "Design new dashboard UI",
+    type: "Story",
+    status: "In Progress",
+    role: "FRONTEND: 100%",
+    storyPoints: 3,
+    inProgress: "4 days",
+    workload: 100,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "6",
-    name: "Frank Thomas",
-    age: 32,
-    city: "Seattle",
-    email: "frank@example.com",
-    status: "inactive",
+    name: "Eylem",
+    email: "eylem.mehmeti@sbb.ch",
+    taskId: "Back-13637",
+    taskTitle: "Implement responsive layout",
+    type: "Story",
+    status: "Open",
+    role: "FRONTEND: 100%",
+    storyPoints: 2,
+    inProgress: "0 days",
+    workload: 80,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "7",
-    name: "Grace Lee",
-    age: 29,
-    city: "Boston",
-    email: "grace@example.com",
-    status: "pending",
+    name: "Eris",
+    email: "eris.gurguska@sbb.ch",
+    taskId: "Back-13680",
+    taskTitle: "Fix 'update user capacity bug'",
+    type: "Bug",
+    status: "Closed",
+    role: "No roles",
+    storyPoints: 2,
+    inProgress: "0 days",
+    workload: 100,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "8",
-    name: "Henry Davis",
-    age: 31,
-    city: "Denver",
-    email: "henry@example.com",
-    status: "active",
+    name: "Lucien",
+    email: "lucien.oberson@sbb.ch",
+    taskId: "Back-13597",
+    taskTitle: "Add new user Kafka topic",
+    type: "Story",
+    status: "Closed",
+    role: "No roles",
+    storyPoints: 3,
+    inProgress: "17 days",
+    workload: 100,
+    workStartDate: "21.02.2024",
+    workEndDate: "14.05.2025",
   },
   {
     id: "9",
-    name: "Ivy Chen",
-    age: 26,
-    city: "San Francisco",
-    email: "ivy@example.com",
-    status: "active",
+    name: "Marta",
+    email: "marta.kowalska@sbb.ch",
+    taskId: "Back-13721",
+    taskTitle: "Add user form",
+    type: "Bug",
+    status: "Open",
+    role: "FRONTEND: 100%",
+    storyPoints: 3,
+    inProgress: "0 days",
+    workload: 100,
+    workStartDate: "15.01.2024",
+    workEndDate: "20.03.2024",
   },
   {
     id: "10",
-    name: "Jack Taylor",
-    age: 33,
-    city: "Phoenix",
-    email: "jack@example.com",
-    status: "inactive",
+    name: "Jeanne",
+    email: "jeanne.dupont@sbb.ch",
+    taskId: "Back-13722",
+    taskTitle: "CI/CD improving helm charts",
+    type: "Bug",
+    status: "In Progress",
+    role: "No roles",
+    storyPoints: 3,
+    inProgress: "4 days",
+    workload: 100,
+    workStartDate: "15.01.2024",
+    workEndDate: "20.03.2024",
   },
   {
     id: "11",
-    name: "Kate Miller",
-    age: 28,
-    city: "Portland",
-    email: "kate@example.com",
-    status: "active",
+    name: "Michael",
+    email: "michael.schmidt@sbb.ch",
+    taskId: "Back-13723",
+    taskTitle: "Design documentation",
+    type: "Story",
+    status: "In Progress",
+    role: "FRONTEND: 100%",
+    storyPoints: 0,
+    inProgress: "25 days",
+    workload: 90,
+    workStartDate: "01.12.2023",
+    workEndDate: "31.03.2024",
   },
   {
     id: "12",
-    name: "Lucas Wang",
-    age: 34,
-    city: "Austin",
-    email: "lucas@example.com",
-    status: "pending",
-  },
-  {
-    id: "13",
-    name: "Maria Garcia",
-    age: 29,
-    city: "Dallas",
-    email: "maria@example.com",
-    status: "inactive",
-  },
-  {
-    id: "14",
-    name: "Noah Kim",
-    age: 31,
-    city: "Atlanta",
-    email: "noah@example.com",
-    status: "active",
-  },
-  {
-    id: "15",
-    name: "Olivia Thompson",
-    age: 27,
-    city: "San Diego",
-    email: "olivia@example.com",
-    status: "pending",
+    name: "Kaan",
+    email: "kaan.kaplan@sbb.ch",
+    taskId: "Back-13724",
+    taskTitle: "Improve DB performance",
+    type: "Story",
+    status: "Open",
+    role: "No roles",
+    storyPoints: 1,
+    inProgress: "0 days",
+    workload: 100,
+    workStartDate: "21.02.2023",
+    workEndDate: "14.05.2023",
   },
 ];
 
-const columns: Array<ColumnDef<DataRow>> = [
+// Первый набор колонок - для представления команды (как на первом изображении)
+const teamColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
-    header: "Name",
-    cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "age",
-    header: "Age",
-    cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "city",
-    header: "City",
+    header: "Team member",
     cell: (info) => info.getValue(),
   },
   {
@@ -204,99 +263,167 @@ const columns: Array<ColumnDef<DataRow>> = [
     cell: (info) => info.getValue(),
   },
   {
+    accessorKey: "taskId",
+    header: "Internal org ID",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "workload",
+    header: "Workload ratio",
+    cell: (info) => `${info.getValue()}`,
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "workStartDate",
+    header: "Work start date",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "workEndDate",
+    header: "Work end date",
+    cell: (info) => info.getValue(),
+  },
+];
+
+// Второй набор колонок - для представления задач (как на втором изображении)
+const taskColumns: Array<ColumnDef<TeamMember>> = [
+  {
+    accessorKey: "name",
+    header: "Team member",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "taskId",
+    header: "Identifier",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "taskTitle",
+    header: "Task title",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "type",
+    header: "Type",
+    cell: (info) => {
+      const type = info.getValue() as string;
+      return (
+        <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          {type === "Bug" ? (
+            <span
+              style={{
+                color: theme.colors.statuses.blocker,
+                paddingTop: "2px",
+              }}
+            >
+              <Icon name="BugReport" />
+            </span>
+          ) : (
+            <span
+              style={{ color: theme.colors.statuses.info, paddingTop: "2px" }}
+            >
+              <Icon name="Check" />
+            </span>
+          )}
+          <span>{type}</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "storyPoints",
+    header: "SP",
+    cell: (info) => info.getValue(),
+  },
+  {
+    accessorKey: "inProgress",
+    header: "In progress",
+    cell: (info) => info.getValue(),
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: (info) => {
-      const status = info.getValue() as DataRow["status"];
+      const status = info.getValue() as "In Progress" | "Open" | "Closed";
       const statusStyles = {
-        active: { color: theme.colors.statuses.success },
-        inactive: { color: theme.colors.statuses.blocker },
-        pending: { color: theme.colors.statuses.warning },
+        "In Progress": { color: theme.colors.statuses.info },
+        Open: { color: theme.colors.statuses.warning },
+        Closed: { color: theme.colors.statuses.success },
       };
       return <span style={statusStyles[status]}>{status}</span>;
     },
   },
 ];
 
-// Default story with all features enabled
-export const Default: Story = {
+// Таблица с данными команды
+export const TeamTable: Story = {
   args: {
-    data,
-    columns,
+    data: teamData,
+    columns: teamColumns,
     enableSorting: true,
     enableFiltering: true,
     enablePagination: true,
-    pageSize: 5,
+    pageSize: 10,
     onRowSelect: (selectedRows) => console.log("Selected rows:", selectedRows),
   },
 };
 
-// Story without pagination
-export const WithoutPagination: Story = {
+// Таблица с данными о задачах
+export const TaskTable: Story = {
   args: {
-    ...Default.args,
-    enablePagination: false,
+    data: teamData,
+    columns: taskColumns,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
+    onRowSelect: (selectedRows) => console.log("Selected rows:", selectedRows),
   },
 };
 
-// Story with striped rows
-export const Striped: Story = {
+// Таблица с полосками (striped)
+export const StripedTable: Story = {
   args: {
-    ...Default.args,
+    ...TeamTable.args,
     striped: true,
   },
 };
 
-// Story without sorting
+// Таблица без пагинации
+export const WithoutPagination: Story = {
+  args: {
+    ...TaskTable.args,
+    enablePagination: false,
+  },
+};
+
+// Таблица без сортировки
 export const WithoutSorting: Story = {
   args: {
-    ...Default.args,
+    ...TeamTable.args,
     enableSorting: false,
   },
 };
 
-// Story with custom page size
-export const CustomPageSize: Story = {
-  args: {
-    ...Default.args,
-    pageSize: 3,
-  },
-};
-
-// Story with row selection handling
+// Таблица с отбором одной строки
 export const WithRowSelection: Story = {
   args: {
-    ...Default.args,
+    ...TaskTable.args,
     onRowSelect: (selectedRows) => {
-      alert(`Selected ${selectedRows.length} rows`);
-      console.log("Selected rows:", selectedRows);
+      alert(`Selected task: ${selectedRows[0]?.taskTitle}`);
+      console.log("Selected row:", selectedRows[0]);
     },
   },
 };
 
-// Story with minimal data
-export const MinimalData: Story = {
+// Таблица с меньшим размером страницы
+export const CustomPageSize: Story = {
   args: {
-    ...Default.args,
-    data: data.slice(0, 3),
-  },
-};
-
-// Story with many rows
-export const ManyRows: Story = {
-  args: {
-    ...Default.args,
-    data: Array.from({ length: 100 }, (_, index) => ({
-      id: `${index + 11}`,
-      name: `User ${index + 11}`,
-      age: 20 + Math.floor(Math.random() * 40),
-      city: ["New York", "Los Angeles", "Chicago", "Houston", "Miami"][
-        Math.floor(Math.random() * 5)
-      ],
-      email: `user${index + 11}@example.com`,
-      status: ["active", "inactive", "pending"][
-        Math.floor(Math.random() * 3)
-      ] as DataRow["status"],
-    })),
+    ...TeamTable.args,
+    pageSize: 5,
   },
 };

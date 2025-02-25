@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -10,6 +10,7 @@ import {
   SortingState,
   ColumnFiltersState,
   flexRender,
+  PaginationState,
 } from "@tanstack/react-table";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -19,7 +20,7 @@ import IconButton from "../IconButton";
 import theme from "../../contstants/theme";
 import Pagination from "../Pagination";
 
-interface TableProps<T> {
+interface TableProps<T extends object> {
   data: T[];
   columns: Array<ColumnDef<T, any>>;
   onRowSelect?: (selectedRows: T[]) => void;
@@ -89,17 +90,17 @@ const getStyles = (striped?: boolean) => ({
   `,
   row: css`
     &:hover {
-      background: ${theme.colors.background.secondary};
+      background: ${theme.colors.background.overlay};
     }
 
     ${striped &&
     `&:nth-of-type(even) {
-      background: ${theme.colors.background.secondary};
-      
-      &:hover {
-        background: ${theme.colors.background.overlay};
-      }
-    }`}
+       background: ${theme.colors.background.secondary};
+
+       &:hover {
+         background: ${theme.colors.background.overlay};
+       }
+     }`}
   `,
   pagination: css`
     display: flex;
@@ -135,14 +136,20 @@ const getStyles = (striped?: boolean) => ({
 function Table<T extends object>({
   data,
   columns,
+  onRowSelect,
   enableSorting = true,
   enablePagination = true,
   striped = false,
+  pageSize = 10, // Default pageSize
 }: TableProps<T>) {
   const styles = getStyles(striped);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [rowSelection, setRowSelection] = useState({});
+  const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: pageSize,
+  });
 
   const table = useReactTable({
     data,
@@ -151,16 +158,29 @@ function Table<T extends object>({
       sorting,
       columnFilters,
       rowSelection,
+      pagination,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    enableSorting: enableSorting, // Respect enableSorting prop
   });
+
+  // Effect to call onRowSelect when rowSelection changes
+  useEffect(() => {
+    if (onRowSelect) {
+      const selectedRows = table
+        .getSelectedRowModel()
+        .rows.map((row) => row.original);
+      onRowSelect(selectedRows);
+    }
+  }, [rowSelection, onRowSelect, table]);
 
   return (
     <div>
@@ -190,7 +210,11 @@ function Table<T extends object>({
                           ? styles.sortHeader
                           : ""
                       }
-                      onClick={header.column.getToggleSortingHandler()}
+                      onClick={
+                        enableSorting && header.column.getCanSort()
+                          ? header.column.getToggleSortingHandler()
+                          : undefined
+                      }
                     >
                       {flexRender(
                         header.column.columnDef.header,
