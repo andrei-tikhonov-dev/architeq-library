@@ -1,3 +1,69 @@
+// Color constants
+const COLORS = {
+  // Brand colors
+  primary: {
+    default: "#EE522E",
+    hover: "#CC3421",
+    focus: "#EE522E",
+    active: "#AB1C17",
+    text: "#8A0E13",
+  },
+  secondary: {
+    default: "#6634FA",
+    hover: "#4E26D7",
+    focus: "#6634FA",
+    active: "#391AB3",
+    text: "#261090",
+  },
+  destructive: {
+    default: "#F74C60",
+    hover: "#D43758",
+    focus: "#F74C60",
+    active: "#B12650",
+    text: "#8F1847",
+  },
+
+  // UI colors
+  text: {
+    default: "#212226",
+    light: "#7A7A7D",
+    disabled: "#898A8D",
+  },
+  background: {
+    primary: "#FFFFFF",
+    secondary: "#F4F5F7",
+    overlay: "rgba(0, 0, 0, 0.1)",
+  },
+  disabled: "#CFCED3",
+  white: "#FFFFFF",
+
+  // Status colors
+  statuses: {
+    success: "#2DA222",
+    info: "#02599B",
+    warning: "#B57215",
+    danger: "#B12650",
+    blocker: "#760E41",
+    attention: "#391AB3",
+  },
+
+  // Button backgrounds
+  buttonBg: {
+    primary: {
+      hover: "#FEE9D5",
+      active: "#FDCDAB",
+    },
+    secondary: {
+      hover: "#E4D6FE",
+      active: "#C8ADFE",
+    },
+    destructive: {
+      hover: "#FEEBEE",
+      active: "#FDCED4",
+    },
+  },
+};
+
 const theme = {
   fontFamily: '"Segoe UI", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;',
   margins: {
@@ -11,30 +77,19 @@ const theme = {
   },
   colors: {
     text: {
-      default: "#212226",
-      light: "#7A7A7D",
-      primary: "#212226",
-      tinted: "#8A0E13",
-      destructive: "#8F1847",
+      default: COLORS.text.default,
+      light: COLORS.text.light,
+      primary: COLORS.text.default,
+      tinted: COLORS.primary.text,
+      destructive: COLORS.destructive.text,
     },
     iconButton: {
       primary: "#EDEDEE",
       tinted: "#FDEAE6",
       destructive: "#FEEAEC",
     },
-    statuses: {
-      success: "#2DA222", // Green — indicates successful completion
-      info: "#02599B", // Blue — represents normal state or informational status
-      warning: "#B57215", // Orange — signals a warning or potential issue
-      danger: "#B12650", // Red — highlights a critical situation
-      blocker: "#760E41", // Dark red — represents a blocking status
-      attention: "#391AB3", // Purple — requires attention or monitoring
-    },
-    background: {
-      primary: "#FFFFFF",
-      secondary: "#F4F5F7",
-      overlay: "rgba(0, 0, 0, 0.1)",
-    },
+    statuses: COLORS.statuses,
+    background: COLORS.background,
   },
   radius: {
     button: "2px",
@@ -79,41 +134,41 @@ const theme = {
     solid: {
       primary: {
         background: {
-          default: "#EE522E",
-          hover: "#CC3421",
-          focus: "#EE522E",
-          active: "#AB1C17",
-          disabled: "#CFCED3",
+          default: COLORS.primary.default,
+          hover: COLORS.primary.hover,
+          focus: COLORS.primary.focus,
+          active: COLORS.primary.active,
+          disabled: COLORS.disabled,
         },
         text: {
-          default: "#FFFFFF",
-          disabled: "#898A8D",
+          default: COLORS.white,
+          disabled: COLORS.text.disabled,
         },
       },
       secondary: {
         background: {
-          default: "#6634FA",
-          hover: "#4E26D7",
-          focus: "#6634FA",
-          active: "#391AB3",
-          disabled: "#CFCED3",
+          default: COLORS.secondary.default,
+          hover: COLORS.secondary.hover,
+          focus: COLORS.secondary.focus,
+          active: COLORS.secondary.active,
+          disabled: COLORS.disabled,
         },
         text: {
-          default: "#FFFFFF",
-          disabled: "#898A8D",
+          default: COLORS.white,
+          disabled: COLORS.text.disabled,
         },
       },
       destructive: {
         background: {
-          default: "#F74C60",
-          hover: "#D43758",
-          focus: "#F74C60",
-          active: "#B12650",
-          disabled: "#CFCED3",
+          default: COLORS.destructive.default,
+          hover: COLORS.destructive.hover,
+          focus: COLORS.destructive.focus,
+          active: COLORS.destructive.active,
+          disabled: COLORS.disabled,
         },
         text: {
-          default: "#FFFFFF",
-          disabled: "#898A8D",
+          default: COLORS.white,
+          disabled: COLORS.text.disabled,
         },
       },
     },
@@ -121,61 +176,61 @@ const theme = {
       primary: {
         background: {
           default: "transparent",
-          hover: "#FEE9D5",
+          hover: COLORS.buttonBg.primary.hover,
           focus: "transparent",
-          active: "#FDCDAB",
+          active: COLORS.buttonBg.primary.active,
           disabled: "transparent",
         },
         border: {
-          default: "#EE522E",
-          hover: "#CC3421",
-          focus: "#EE522E",
-          active: "#AB1C17",
-          disabled: "#CFCED3",
+          default: COLORS.primary.default,
+          hover: COLORS.primary.hover,
+          focus: COLORS.primary.focus,
+          active: COLORS.primary.active,
+          disabled: COLORS.disabled,
         },
         text: {
-          default: "#8A0E13",
-          disabled: "#898A8D",
+          default: COLORS.primary.text,
+          disabled: COLORS.text.disabled,
         },
       },
       secondary: {
         background: {
           default: "transparent",
-          hover: "#E4D6FE",
+          hover: COLORS.buttonBg.secondary.hover,
           focus: "transparent",
-          active: "#C8ADFE",
+          active: COLORS.buttonBg.secondary.active,
           disabled: "transparent",
         },
         border: {
-          default: "#6634FA",
-          hover: "#4E26D7",
-          focus: "#6634FA",
-          active: "#391AB3",
-          disabled: "#CFCED3",
+          default: COLORS.secondary.default,
+          hover: COLORS.secondary.hover,
+          focus: COLORS.secondary.focus,
+          active: COLORS.secondary.active,
+          disabled: COLORS.disabled,
         },
         text: {
-          default: "#261090",
-          disabled: "#898A8D",
+          default: COLORS.secondary.text,
+          disabled: COLORS.text.disabled,
         },
       },
       destructive: {
         background: {
           default: "transparent",
-          hover: "#FEEBEE",
+          hover: COLORS.buttonBg.destructive.hover,
           focus: "transparent",
-          active: "#FDCED4",
+          active: COLORS.buttonBg.destructive.active,
           disabled: "transparent",
         },
         border: {
-          default: "#F74C60",
-          hover: "#D43758",
-          focus: "#F74C60",
-          active: "#B12650",
-          disabled: "#CFCED3",
+          default: COLORS.destructive.default,
+          hover: COLORS.destructive.hover,
+          focus: COLORS.destructive.focus,
+          active: COLORS.destructive.active,
+          disabled: COLORS.disabled,
         },
         text: {
-          default: "#8F1847",
-          disabled: "#898A8D",
+          default: COLORS.destructive.text,
+          disabled: COLORS.text.disabled,
         },
       },
     },
@@ -183,40 +238,40 @@ const theme = {
       primary: {
         background: {
           default: "transparent",
-          hover: "#FEE9D5",
+          hover: COLORS.buttonBg.primary.hover,
           focus: "transparent",
-          active: "#FDCDAB",
+          active: COLORS.buttonBg.primary.active,
           disabled: "transparent",
         },
         text: {
-          default: "#8A0E13",
-          disabled: "#898A8D",
+          default: COLORS.primary.text,
+          disabled: COLORS.text.disabled,
         },
       },
       secondary: {
         background: {
           default: "transparent",
-          hover: "#E4D6FE",
+          hover: COLORS.buttonBg.secondary.hover,
           focus: "transparent",
-          active: "#C8ADFE",
+          active: COLORS.buttonBg.secondary.active,
           disabled: "transparent",
         },
         text: {
-          default: "#261090",
-          disabled: "#898A8D",
+          default: COLORS.secondary.text,
+          disabled: COLORS.text.disabled,
         },
       },
       destructive: {
         background: {
           default: "transparent",
-          hover: "#FEEBEE",
+          hover: COLORS.buttonBg.destructive.hover,
           focus: "transparent",
-          active: "#FDCED4",
+          active: COLORS.buttonBg.destructive.active,
           disabled: "transparent",
         },
         text: {
-          default: "#8F1847",
-          disabled: "#898A8D",
+          default: COLORS.destructive.text,
+          disabled: COLORS.text.disabled,
         },
       },
     },
