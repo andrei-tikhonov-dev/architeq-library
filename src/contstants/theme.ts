@@ -83,11 +83,11 @@ const theme = {
           hover: "#CC3421",
           focus: "#EE522E",
           active: "#AB1C17",
-          disabled: "#7A7A7D",
+          disabled: "#CFCED3",
         },
         text: {
           default: "#FFFFFF",
-          disabled: "#FFFFFF",
+          disabled: "#898A8D",
         },
       },
       secondary: {
@@ -96,11 +96,11 @@ const theme = {
           hover: "#4E26D7",
           focus: "#6634FA",
           active: "#391AB3",
-          disabled: "#7A7A7D",
+          disabled: "#CFCED3",
         },
         text: {
           default: "#FFFFFF",
-          disabled: "#FFFFFF",
+          disabled: "#898A8D",
         },
       },
       destructive: {
@@ -109,11 +109,11 @@ const theme = {
           hover: "#D43758",
           focus: "#F74C60",
           active: "#B12650",
-          disabled: "#7A7A7D",
+          disabled: "#CFCED3",
         },
         text: {
           default: "#FFFFFF",
-          disabled: "#FFFFFF",
+          disabled: "#898A8D",
         },
       },
     },
@@ -131,11 +131,11 @@ const theme = {
           hover: "#CC3421",
           focus: "#EE522E",
           active: "#AB1C17",
-          disabled: "#7A7A7D",
+          disabled: "#CFCED3",
         },
         text: {
           default: "#8A0E13",
-          disabled: "#7A7A7D",
+          disabled: "#898A8D",
         },
       },
       secondary: {
@@ -151,11 +151,11 @@ const theme = {
           hover: "#4E26D7",
           focus: "#6634FA",
           active: "#391AB3",
-          disabled: "#7A7A7D",
+          disabled: "#CFCED3",
         },
         text: {
           default: "#261090",
-          disabled: "#7A7A7D",
+          disabled: "#898A8D",
         },
       },
       destructive: {
@@ -171,11 +171,11 @@ const theme = {
           hover: "#D43758",
           focus: "#F74C60",
           active: "#B12650",
-          disabled: "#7A7A7D",
+          disabled: "#CFCED3",
         },
         text: {
           default: "#8F1847",
-          disabled: "#7A7A7D",
+          disabled: "#898A8D",
         },
       },
     },
@@ -190,7 +190,7 @@ const theme = {
         },
         text: {
           default: "#8A0E13",
-          disabled: "#7A7A7D",
+          disabled: "#898A8D",
         },
       },
       secondary: {
@@ -203,7 +203,7 @@ const theme = {
         },
         text: {
           default: "#261090",
-          disabled: "#7A7A7D",
+          disabled: "#898A8D",
         },
       },
       destructive: {
@@ -216,7 +216,7 @@ const theme = {
         },
         text: {
           default: "#8F1847",
-          disabled: "#7A7A7D",
+          disabled: "#898A8D",
         },
       },
     },
