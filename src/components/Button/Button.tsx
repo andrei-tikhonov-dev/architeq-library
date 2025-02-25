@@ -1,5 +1,5 @@
 import React, { forwardRef, useMemo } from "react";
-import { css, cx } from "@emotion/css";
+import { css, cx, keyframes } from "@emotion/css";
 import Icon from "../Icon";
 import theme from "../../contstants/theme";
 import { IconNameType } from "../../types";
@@ -19,6 +19,16 @@ export interface ButtonProps
   fullWidth?: boolean;
   isLoading?: boolean;
 }
+
+// Создаем анимацию вращения с помощью keyframes
+const spin = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+`;
 
 const getStyles = (
   size: ButtonSize,
@@ -157,7 +167,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   const iconStyles = useMemo(
     () => ({
       loading: css`
-        animation: spin 1s linear infinite;
+        animation: ${spin} 1s linear infinite;
         margin-right: ${theme.buttons.sizes[size].iconGap};
       `,
       leftIcon: css`

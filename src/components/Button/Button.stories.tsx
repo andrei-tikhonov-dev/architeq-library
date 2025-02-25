@@ -2,6 +2,11 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import Button, { ButtonProps } from "./Button";
+import { icons } from "../Icon";
+
+const iconNames = Object.keys(icons).sort();
+
+const ICON_OPTIONS = ["", ...iconNames];
 
 export default {
   title: "Components/Button",
@@ -38,12 +43,14 @@ export default {
       description: "Button style",
     },
     leftIcon: {
-      control: "text",
-      description: "Left icon name (optional)",
+      control: "select",
+      options: ICON_OPTIONS,
+      description: "Left icon name",
     },
     rightIcon: {
-      control: "text",
-      description: "Right icon name (optional)",
+      control: "select",
+      options: ICON_OPTIONS,
+      description: "Right icon name",
     },
     fullWidth: {
       control: "boolean",
@@ -63,7 +70,6 @@ export default {
 
 type Story = StoryObj<ButtonProps>;
 
-// Default button
 export const Default: Story = {
   args: {
     children: "Button",
@@ -73,7 +79,6 @@ export const Default: Story = {
   },
 };
 
-// Solid Variants
 export const PrimarySolid: Story = {
   args: {
     children: "Primary Solid",
@@ -98,7 +103,6 @@ export const DestructiveSolid: Story = {
   },
 };
 
-// Outline Variants
 export const PrimaryOutline: Story = {
   args: {
     children: "Primary Outline",
@@ -123,7 +127,6 @@ export const DestructiveOutline: Story = {
   },
 };
 
-// Ghost Variants
 export const PrimaryGhost: Story = {
   args: {
     children: "Primary Ghost",
@@ -148,7 +151,6 @@ export const DestructiveGhost: Story = {
   },
 };
 
-// Sizes
 export const SmallButton: Story = {
   args: {
     children: "Small Button",
@@ -170,7 +172,6 @@ export const LargeButton: Story = {
   },
 };
 
-// With icons
 export const WithLeftIcon: Story = {
   args: {
     children: "With Left Icon",
@@ -193,7 +194,6 @@ export const WithBothIcons: Story = {
   },
 };
 
-// States
 export const Disabled: Story = {
   args: {
     children: "Disabled Button",
@@ -218,7 +218,6 @@ export const FullWidth: Story = {
   },
 };
 
-// Button variants showcase
 export const AllSolid = () => (
   <div style={{ display: "flex", gap: "12px" }}>
     <Button buttonStyle="solid" variant="primary">
@@ -352,9 +351,9 @@ export const Showcase = () => (
     <div>
       <h3>With Icons</h3>
       <div style={{ display: "flex", gap: "12px" }}>
-        <Button leftIcon="Check">Left Icon</Button>
+        <Button leftIcon="ArrowLeft">Left Icon</Button>
         <Button rightIcon="ArrowRight">Right Icon</Button>
-        <Button leftIcon="Settings" rightIcon="ArrowLeft">
+        <Button leftIcon="ArrowLeft" rightIcon="ArrowRight">
           Both Icons
         </Button>
       </div>
@@ -363,11 +362,13 @@ export const Showcase = () => (
     <div>
       <h3>Loading State</h3>
       <div style={{ display: "flex", gap: "12px" }}>
-        <Button isLoading>Loading</Button>
-        <Button isLoading variant="secondary">
+        <Button isLoading buttonStyle="solid">
           Loading
         </Button>
-        <Button isLoading variant="destructive">
+        <Button isLoading buttonStyle="outline">
+          Loading
+        </Button>
+        <Button isLoading buttonStyle="ghost">
           Loading
         </Button>
       </div>
