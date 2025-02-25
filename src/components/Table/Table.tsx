@@ -15,10 +15,10 @@ import {
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { css } from "@emotion/css";
-import Icon from "../Icon";
-import IconButton from "../IconButton";
 import theme from "../../contstants/theme";
-import Pagination from "../Pagination";
+import { IconButton } from "../IconButton";
+import { Icon } from "../Icon";
+import { Pagination } from "../Pagination";
 
 interface TableProps<T extends object> {
   data: T[];
@@ -133,7 +133,7 @@ const getStyles = (striped?: boolean) => ({
   `,
 });
 
-function Table<T extends object>({
+export function Table<T extends object>({
   data,
   columns,
   onRowSelect,
@@ -290,5 +290,3 @@ function Table<T extends object>({
     </div>
   );
 }
-
-export default Table;

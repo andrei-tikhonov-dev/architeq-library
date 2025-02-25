@@ -1,9 +1,9 @@
 // @ts-ignore
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { StatusLine } from ".";
 import { StatusLineProps } from "./types";
 import statuses from "../../contstants/statuses";
+import StatusLine from "./StatusLine";
 
 export default {
   title: "Components/StatusLine",

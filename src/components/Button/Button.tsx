@@ -1,8 +1,8 @@
 import React, { forwardRef, useMemo } from "react";
 import { css, cx, keyframes } from "@emotion/css";
-import Icon from "../Icon";
 import theme from "../../contstants/theme";
 import { IconNameType } from "../../types";
+import { Icon } from "../Icon";
 
 export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonVariant = "primary" | "secondary" | "destructive";
@@ -143,74 +143,74 @@ const getStyles = (
   return { baseStyles, specificStyles };
 };
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {
-    children,
-    size = "md",
-    variant = "primary",
-    buttonStyle = "solid",
-    leftIcon,
-    rightIcon,
-    fullWidth = false,
-    isLoading = false,
-    disabled = false,
-    className,
-    ...rest
-  },
-  ref
-) {
-  const { baseStyles, specificStyles } = useMemo(
-    () => getStyles(size, variant, buttonStyle, fullWidth),
-    [size, variant, buttonStyle, fullWidth]
-  );
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      children,
+      size = "md",
+      variant = "primary",
+      buttonStyle = "solid",
+      leftIcon,
+      rightIcon,
+      fullWidth = false,
+      isLoading = false,
+      disabled = false,
+      className,
+      ...rest
+    },
+    ref
+  ) {
+    const { baseStyles, specificStyles } = useMemo(
+      () => getStyles(size, variant, buttonStyle, fullWidth),
+      [size, variant, buttonStyle, fullWidth]
+    );
 
-  const iconStyles = useMemo(
-    () => ({
-      loading: css`
-        animation: ${spin} 1s linear infinite;
-        margin-right: ${theme.buttons.sizes[size].iconGap};
-      `,
-      leftIcon: css`
-        margin-right: ${theme.buttons.sizes[size].iconGap};
-      `,
-      rightIcon: css`
-        margin-left: ${theme.buttons.sizes[size].iconGap};
-      `,
-    }),
-    [size]
-  );
+    const iconStyles = useMemo(
+      () => ({
+        loading: css`
+          animation: ${spin} 1s linear infinite;
+          margin-right: ${theme.buttons.sizes[size].iconGap};
+        `,
+        leftIcon: css`
+          margin-right: ${theme.buttons.sizes[size].iconGap};
+        `,
+        rightIcon: css`
+          margin-left: ${theme.buttons.sizes[size].iconGap};
+        `,
+      }),
+      [size]
+    );
 
-  const buttonHtmlType = rest.type || "button";
+    const buttonHtmlType = rest.type || "button";
 
-  return (
-    <button
-      ref={ref}
-      type={buttonHtmlType}
-      disabled={disabled || isLoading}
-      className={cx(baseStyles, specificStyles, className)}
-      {...rest}
-    >
-      {isLoading && (
-        <Icon
-          name="ProgressActivity"
-          size={size}
-          className={iconStyles.loading}
-        />
-      )}
+    return (
+      <button
+        ref={ref}
+        type={buttonHtmlType}
+        disabled={disabled || isLoading}
+        className={cx(baseStyles, specificStyles, className)}
+        {...rest}
+      >
+        {isLoading && (
+          <Icon
+            name="ProgressActivity"
+            size={size}
+            className={iconStyles.loading}
+          />
+        )}
 
-      {!isLoading && leftIcon && (
-        <Icon name={leftIcon} size={size} className={iconStyles.leftIcon} />
-      )}
+        {!isLoading && leftIcon && (
+          <Icon name={leftIcon} size={size} className={iconStyles.leftIcon} />
+        )}
 
-      {children}
+        {children}
 
-      {!isLoading && rightIcon && (
-        <Icon name={rightIcon} size={size} className={iconStyles.rightIcon} />
-      )}
-    </button>
-  );
-});
+        {!isLoading && rightIcon && (
+          <Icon name={rightIcon} size={size} className={iconStyles.rightIcon} />
+        )}
+      </button>
+    );
+  }
+);
 
 Button.displayName = "Button";
-
-export default Button;

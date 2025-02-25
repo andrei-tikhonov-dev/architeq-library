@@ -1,8 +1,8 @@
 import React, { forwardRef, useMemo } from "react";
 import { css, cx } from "@emotion/css";
-import Icon from "../Icon";
 import theme from "../../contstants/theme";
 import { IconNameType } from "../../types";
+import { Icon } from "../Icon";
 
 type IconButtonSize = "sm" | "md" | "lg";
 type IconButtonVariant = "primary" | "destructive" | "tinted";
@@ -61,7 +61,7 @@ const getStyles = (size: IconButtonSize, variant: IconButtonVariant) => ({
   `,
 });
 
-const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   function IconButton(
     {
       name,
@@ -96,5 +96,3 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 );
 
 IconButton.displayName = "IconButton";
-
-export default IconButton;

@@ -1,8 +1,8 @@
 // @ts-ignore
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import IconButton from ".";
 import { IconButtonProps } from "./types";
+import { IconButton } from "./IconButton";
 
 export default {
   title: "Components/IconButton",

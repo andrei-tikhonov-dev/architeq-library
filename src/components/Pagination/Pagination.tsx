@@ -2,7 +2,7 @@
 import React from "react";
 import { css } from "@emotion/css";
 import theme from "../../contstants/theme";
-import IconButton from "../IconButton";
+import { IconButton } from "../IconButton";
 
 export interface PaginationProps {
   currentPage: number;
@@ -54,7 +54,7 @@ const getStyles = () => ({
 
 export const DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 50];
 
-function Pagination({
+export function Pagination({
   currentPage,
   totalPages,
   pageSize,
@@ -126,5 +126,3 @@ function Pagination({
     </div>
   );
 }
-
-export default Pagination;

@@ -2,9 +2,9 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { ColumnDef } from "@tanstack/react-table";
-import Table from "./Table";
 import theme from "../../contstants/theme";
-import Icon from "../Icon";
+import { Icon } from "../Icon";
+import { Table } from "./Table";
 
 interface TeamMember {
   id: string;
@@ -368,7 +368,8 @@ export const TeamTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: (selectedRows) => console.log("Selected rows:", selectedRows),
+    onRowSelect: (selectedRows: any) =>
+      console.log("Selected rows:", selectedRows),
   },
 };
 
@@ -381,7 +382,8 @@ export const TaskTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: (selectedRows) => console.log("Selected rows:", selectedRows),
+    onRowSelect: (selectedRows: any) =>
+      console.log("Selected rows:", selectedRows),
   },
 };
 
@@ -413,7 +415,7 @@ export const WithoutSorting: Story = {
 export const WithRowSelection: Story = {
   args: {
     ...TaskTable.args,
-    onRowSelect: (selectedRows) => {
+    onRowSelect: (selectedRows: any) => {
       console.log("Selected row:", selectedRows);
     },
   },

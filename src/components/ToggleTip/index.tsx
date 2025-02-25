@@ -1,1 +1,1 @@
-export { default } from "./ToggleTip";
+export * from "./ToggleTip";

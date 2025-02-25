@@ -1,9 +1,9 @@
 // @ts-ignore
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import ToggleTip, { ToggleTipProps } from "./ToggleTip";
-import Button from "../Button";
 import { css } from "@emotion/css";
+import { ToggleTip, ToggleTipProps } from "./ToggleTip";
+import { Button } from "../Button";
 
 export default {
   title: "Components/ToggleTip",

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { css } from "@emotion/css";
-import { useStyles2 } from "@grafana/ui";
 import theme from "../../contstants/theme";
-import IconButton from "../IconButton";
+import { IconButton } from "../IconButton";
 
 export interface ToggleTipProps {
   /** Content to display inside the tooltip */
@@ -32,7 +31,7 @@ export interface ToggleTipProps {
   id?: string;
 }
 
-const getStyles = () => ({
+const styles = {
   container: css`
     background-color: ${theme.colors.background.primary};
     color: ${theme.colors.text.default};
@@ -69,9 +68,9 @@ const getStyles = () => ({
       color: ${theme.colors.text.default};
     }
   `,
-});
+};
 
-const ToggleTip: React.FC<ToggleTipProps> = ({
+export const ToggleTip: React.FC<ToggleTipProps> = ({
   content,
   title,
   children,
@@ -85,7 +84,6 @@ const ToggleTip: React.FC<ToggleTipProps> = ({
   showCloseButton = true,
   id,
 }) => {
-  const styles = useStyles2(getStyles);
   const [internalOpen, setInternalOpen] = useState(defaultOpen || false);
 
   // Handle controlled vs uncontrolled component
@@ -135,5 +133,3 @@ const ToggleTip: React.FC<ToggleTipProps> = ({
     </Popover.Root>
   );
 };
-
-export default ToggleTip;

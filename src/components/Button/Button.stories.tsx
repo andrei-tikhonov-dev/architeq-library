@@ -1,8 +1,8 @@
 // @ts-ignore
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Button, { ButtonProps } from "./Button";
 import { icons } from "../Icon";
+import { Button, ButtonProps } from "./Button";
 
 const iconNames = Object.keys(icons).sort();
 
