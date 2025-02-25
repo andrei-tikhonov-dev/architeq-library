@@ -12,13 +12,13 @@ import {
   flexRender,
   PaginationState,
 } from "@tanstack/react-table";
-import * as Checkbox from "@radix-ui/react-checkbox";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { css } from "@emotion/css";
 import theme from "../../contstants/theme";
 import { IconButton } from "../IconButton";
 import { Icon } from "../Icon";
 import { Pagination } from "../Pagination";
+import { Checkbox } from "../Checkbox";
 
 interface TableProps<T extends object> {
   data: T[];
@@ -68,25 +68,6 @@ const getStyles = (striped?: boolean) => ({
     &:hover {
       color: ${theme.colors.text.default};
     }
-  `,
-  checkboxRoot: css`
-    width: 16px;
-    height: 16px;
-    border-radius: ${theme.radius.button};
-    border: 1px solid ${theme.colors.text.light};
-    background: ${theme.colors.background.primary};
-
-    &:hover {
-      background: ${theme.colors.background.secondary};
-    }
-
-    &[data-state="checked"] {
-      background: ${theme.colors.statuses.info};
-      border-color: ${theme.colors.statuses.info};
-    }
-  `,
-  checkboxIndicator: css`
-    color: ${theme.colors.background.primary};
   `,
   row: css`
     &:hover {
@@ -189,17 +170,15 @@ export function Table<T extends object>({
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               <th className={styles.th}>
-                <Checkbox.Root
-                  className={styles.checkboxRoot}
+                {/* Заменяем на Checkbox primary sm */}
+                <Checkbox
+                  size="sm"
+                  variant="primary"
                   checked={table.getIsAllRowsSelected()}
                   onCheckedChange={(checked) =>
                     table.toggleAllRowsSelected(!!checked)
                   }
-                >
-                  <Checkbox.Indicator className={styles.checkboxIndicator}>
-                    <Icon name="Check" size="sm" />
-                  </Checkbox.Indicator>
-                </Checkbox.Root>
+                />
               </th>
               {headerGroup.headers.map((header) => (
                 <th key={header.id} className={styles.th}>
@@ -236,15 +215,14 @@ export function Table<T extends object>({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className={styles.row}>
               <td className={styles.td}>
-                <Checkbox.Root
-                  className={styles.checkboxRoot}
+                {/* Заменяем на Checkbox primary sm */}
+                <Checkbox
+                  size="sm"
+                  variant="primary"
                   checked={row.getIsSelected()}
                   onCheckedChange={(checked) => row.toggleSelected(!!checked)}
-                >
-                  <Checkbox.Indicator className={styles.checkboxIndicator}>
-                    <Icon name="Check" size="sm" />
-                  </Checkbox.Indicator>
-                </Checkbox.Root>
+                  aria-label={`Select row ${row.id}`}
+                />
               </td>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className={styles.td}>

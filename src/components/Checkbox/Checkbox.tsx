@@ -60,11 +60,6 @@ const getStyles = (
       cursor: ${disabled ? "not-allowed" : "pointer"};
       transition: all 0.2s ease-in-out;
 
-      &:hover:not(:disabled) {
-        background-color: ${theme.colors.background.secondary};
-        border-color: ${variantColor.hover};
-      }
-
       &:focus-visible {
         outline: 2px solid ${variantColor.focus};
         outline-offset: 2px;
