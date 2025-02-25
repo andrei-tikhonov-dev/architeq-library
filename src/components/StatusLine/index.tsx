@@ -9,7 +9,7 @@ import Icon from "../Icon";
 import theme from "../../contstants/theme";
 import IconButton from "../IconButton";
 import { TooltipLine } from "../TooltipLine";
-import { ToggleTip } from "../ToggleTip";
+import ToggleTip from "../ToggleTip";
 
 const getStyles = () => ({
   container: css`
