@@ -1,5 +1,5 @@
 // Color constants
-const COLORS = {
+export const COLORS = {
   // Brand colors
   primary: {
     default: "#EE522E",
