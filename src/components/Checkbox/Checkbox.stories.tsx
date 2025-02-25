@@ -188,15 +188,22 @@ export const Showcase = () => (
           margin: "12px 0",
         }}
       >
-        <Checkbox label="Primary Checkbox" variant="primary" defaultChecked />
+        <Checkbox
+          label="Primary Checkbox"
+          variant="primary"
+          id="primary"
+          defaultChecked
+        />
         <Checkbox
           label="Secondary Checkbox"
           variant="secondary"
+          id="secondary"
           defaultChecked
         />
         <Checkbox
           label="Destructive Checkbox"
           variant="destructive"
+          id="destructive"
           defaultChecked
         />
       </div>
@@ -212,9 +219,14 @@ export const Showcase = () => (
           margin: "12px 0",
         }}
       >
-        <Checkbox label="Small Checkbox" size="sm" defaultChecked />
-        <Checkbox label="Medium Checkbox" size="md" defaultChecked />
-        <Checkbox label="Large Checkbox" size="lg" defaultChecked />
+        <Checkbox label="Small Checkbox" size="sm" id="small" defaultChecked />
+        <Checkbox
+          label="Medium Checkbox"
+          size="md"
+          id="medium"
+          defaultChecked
+        />
+        <Checkbox label="Large Checkbox" size="lg" id="large" defaultChecked />
       </div>
     </div>
 
@@ -228,9 +240,9 @@ export const Showcase = () => (
           margin: "12px 0",
         }}
       >
-        <Checkbox label="Unchecked" />
-        <Checkbox label="Checked" defaultChecked />
-        <Checkbox label="Indeterminate" indeterminate />
+        <Checkbox label="Unchecked" id="unchecked" />
+        <Checkbox label="Checked" id="checked" defaultChecked />
+        <Checkbox label="Indeterminate" id="indeterminate" indeterminate />
         <Checkbox label="Disabled Unchecked" disabled />
         <Checkbox label="Disabled Checked" disabled defaultChecked />
         <Checkbox label="Disabled Indeterminate" disabled indeterminate />
