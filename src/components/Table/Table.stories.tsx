@@ -414,8 +414,7 @@ export const WithRowSelection: Story = {
   args: {
     ...TaskTable.args,
     onRowSelect: (selectedRows) => {
-      alert(`Selected task: ${selectedRows[0]?.taskTitle}`);
-      console.log("Selected row:", selectedRows[0]);
+      console.log("Selected row:", selectedRows);
     },
   },
 };
