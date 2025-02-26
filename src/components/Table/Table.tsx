@@ -150,10 +150,9 @@ export function Table<T extends object>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    enableSorting: enableSorting, // Respect enableSorting prop
+    enableSorting: enableSorting,
   });
 
-  // Effect to call onRowSelect when rowSelection changes
   useEffect(() => {
     if (onRowSelect) {
       const selectedRows = table
@@ -170,7 +169,6 @@ export function Table<T extends object>({
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               <th className={styles.th}>
-                {/* Заменяем на Checkbox primary sm */}
                 <Checkbox
                   size="sm"
                   variant="primary"
@@ -215,7 +213,6 @@ export function Table<T extends object>({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className={styles.row}>
               <td className={styles.td}>
-                {/* Заменяем на Checkbox primary sm */}
                 <Checkbox
                   size="sm"
                   variant="primary"

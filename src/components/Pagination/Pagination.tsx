@@ -24,6 +24,8 @@ const getStyles = () => ({
     padding: ${theme.spacing.lg} 0;
     color: ${theme.colors.text.default};
     font-family: ${theme.fontFamily};
+    font-size: ${theme.typography.size.sm};
+    line-height: 20px;
   `,
   leftSection: css`
     display: flex;
