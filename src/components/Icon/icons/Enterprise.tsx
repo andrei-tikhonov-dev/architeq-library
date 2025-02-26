@@ -1,6 +1,3 @@
-// @ts-ignore
-import React from "react";
-
 const Icon = (props: any) => {
   return (
     <svg

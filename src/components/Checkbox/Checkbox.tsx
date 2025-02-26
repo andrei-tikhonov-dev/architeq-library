@@ -1,5 +1,4 @@
-// @ts-ignore
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
 import { css, cx } from "@emotion/css";
 import { CheckIcon } from "@radix-ui/react-icons";

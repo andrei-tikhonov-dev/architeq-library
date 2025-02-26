@@ -1,5 +1,4 @@
-// @ts-ignore
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import * as RadixSelect from "@radix-ui/react-select";
 import { css, cx } from "@emotion/css";
 import {

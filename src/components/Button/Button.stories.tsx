@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { icons } from "../Icon";
 import { Button, ButtonProps } from "./Button";

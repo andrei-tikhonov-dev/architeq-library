@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { StatusLineProps } from "./types";
 import statuses from "../../contstants/statuses";

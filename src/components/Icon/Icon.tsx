@@ -1,4 +1,3 @@
-// @ts-ignore
 import React from "react";
 
 import AccountCircle from "./icons/AccountCircle";

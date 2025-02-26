@@ -1,4 +1,3 @@
-// @ts-ignore
 import React from "react";
 import { css } from "@emotion/css";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";

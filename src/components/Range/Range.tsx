@@ -61,10 +61,11 @@ export const Range: React.FC<RangeProps> = ({ items, onChange }) => {
     if (values.length !== 2) {
       return;
     }
-    // @ts-ignore
-    setRange([values[0], values[1]]);
-    // @ts-ignore
-    onChange?.({ start: items[values[0]], end: items[values[1]] });
+    setRange([values[0] || 0, values[1] || 0]);
+    onChange?.({
+      start: items[values[0] || 0] as any,
+      end: items[values[1] || 0] as any,
+    });
   };
 
   const labels = useMemo(

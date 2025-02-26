@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { StatusIcon, statusIcons } from "./index";
 
 import { StatusType } from "../../types";

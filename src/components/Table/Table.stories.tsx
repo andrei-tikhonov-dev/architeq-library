@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { ColumnDef } from "@tanstack/react-table";
 import theme from "../../contstants/theme";

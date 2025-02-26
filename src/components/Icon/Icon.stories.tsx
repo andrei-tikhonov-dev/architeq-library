@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { Icon, icons } from ".";
 
 const iconNames = Object.keys(icons).sort();

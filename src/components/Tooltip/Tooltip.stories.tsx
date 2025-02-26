@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { css } from "@emotion/css";
 import { Tooltip, TooltipProps } from "./Tooltip";

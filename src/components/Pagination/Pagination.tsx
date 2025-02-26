@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { css } from "@emotion/css";
 import theme from "../../contstants/theme";
 import { IconButton } from "../IconButton";

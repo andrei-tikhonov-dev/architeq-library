@@ -1,5 +1,4 @@
-// @ts-ignore
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { AlertDialog, AlertDialogProps } from "./AlertDialog";
 import { Button } from "../Button";
