@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { css } from "@emotion/css";
 import theme from "../../contstants/theme";
+import { Tooltip } from "../Tooltip";
 
 export interface EllipsisProps {
   /**
@@ -20,15 +21,11 @@ export interface EllipsisProps {
   /**
    * Custom tooltip content (defaults to the full text)
    */
-  tooltipContent?: string;
+  tooltipContent?: React.ReactNode;
   /**
    * Custom CSS class for the container
    */
   className?: string;
-  /**
-   * Custom CSS class for the tooltip
-   */
-  tooltipClassName?: string;
   /**
    * Custom CSS styles for the container
    */
@@ -37,12 +34,27 @@ export interface EllipsisProps {
    * The HTML element to render
    * @default "div"
    */
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   /**
-   * Custom position for the tooltip
+   * Tooltip position
    * @default "bottom"
    */
-  tooltipPosition?: "top" | "bottom" | "left" | "right";
+  tooltipSide?: "top" | "right" | "bottom" | "left";
+  /**
+   * Tooltip alignment
+   * @default "center"
+   */
+  tooltipAlign?: "start" | "center" | "end";
+  /**
+   * Space between text and tooltip
+   * @default 5
+   */
+  tooltipOffset?: number;
+  /**
+   * Delay in ms before showing the tooltip
+   * @default 300
+   */
+  tooltipDelay?: number;
   /**
    * Whether to allow text selection
    * @default true
@@ -50,67 +62,7 @@ export interface EllipsisProps {
   allowSelection?: boolean;
 }
 
-const getStyles = (
-  lines: number = 1,
-  isTruncated: boolean,
-  allowSelection: boolean,
-  tooltipPosition: EllipsisProps["tooltipPosition"] = "bottom"
-) => {
-  const positionStyles = {
-    top: `
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-bottom: 8px;
-      
-      &::after {
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-color: rgba(33, 34, 38, 0.9) transparent transparent transparent;
-      }
-    `,
-    bottom: `
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-top: 8px;
-      
-      &::after {
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-color: transparent transparent rgba(33, 34, 38, 0.9) transparent;
-      }
-    `,
-    left: `
-      right: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-right: 8px;
-      
-      &::after {
-        top: 50%;
-        left: 100%;
-        margin-top: -5px;
-        border-color: transparent transparent transparent rgba(33, 34, 38, 0.9);
-      }
-    `,
-    right: `
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-left: 8px;
-      
-      &::after {
-        top: 50%;
-        right: 100%;
-        margin-top: -5px;
-        border-color: transparent rgba(33, 34, 38, 0.9) transparent transparent;
-      }
-    `,
-  };
-
+const getStyles = (lines = 1, allowSelection: boolean) => {
   return {
     container: css`
       position: relative;
@@ -130,36 +82,6 @@ const getStyles = (
       font-family: ${theme.fontFamily};
       user-select: ${allowSelection ? "text" : "none"};
     `,
-    tooltip: css`
-      position: absolute;
-      z-index: 1000;
-      max-width: 300px;
-      padding: 8px 12px;
-      border-radius: 4px;
-      background-color: rgba(33, 34, 38, 0.9);
-      color: white;
-      font-size: ${theme.typography.size.sm};
-      line-height: 1.4;
-      word-wrap: break-word;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-      ${positionStyles[tooltipPosition]}
-
-      &::after {
-        content: "";
-        position: absolute;
-        border-width: 5px;
-        border-style: solid;
-      }
-    `,
-    containerWithTooltip: css`
-      &:hover > .ellipsis-tooltip {
-        visibility: ${isTruncated ? "visible" : "hidden"};
-        opacity: ${isTruncated ? 1 : 0};
-      }
-    `,
   };
 };
 
@@ -169,10 +91,12 @@ export const Ellipsis: React.FC<EllipsisProps> = ({
   showTooltip = true,
   tooltipContent,
   className,
-  tooltipClassName,
   style,
   as = "div",
-  tooltipPosition = "bottom",
+  tooltipSide = "bottom",
+  tooltipAlign = "center",
+  tooltipOffset = 5,
+  tooltipDelay = 300,
   allowSelection = true,
 }) => {
   const [isTruncated, setIsTruncated] = useState(false);
@@ -181,7 +105,9 @@ export const Ellipsis: React.FC<EllipsisProps> = ({
   useEffect(() => {
     const checkTruncation = () => {
       const element = textRef.current;
-      if (!element) return;
+      if (!element) {
+        return;
+      }
 
       if (lines === 1) {
         setIsTruncated(element.scrollWidth > element.clientWidth);
@@ -199,34 +125,40 @@ export const Ellipsis: React.FC<EllipsisProps> = ({
     };
   }, [children, lines]);
 
-  const styles = getStyles(lines, isTruncated, allowSelection, tooltipPosition);
+  const styles = getStyles(lines, allowSelection);
   const Component = as as React.ElementType;
-  const tooltipText = tooltipContent || children;
+  const content = tooltipContent || children;
+
+  if (!showTooltip || !isTruncated) {
+    return (
+      <Component
+        ref={textRef}
+        className={css([styles.container, className])}
+        style={style}
+        title={!showTooltip ? children : undefined}
+      >
+        {children}
+      </Component>
+    );
+  }
 
   return (
-    <Component
-      ref={textRef}
-      className={css([
-        styles.container,
-        showTooltip && styles.containerWithTooltip,
-        className,
-      ])}
-      style={style}
-      title={showTooltip ? undefined : tooltipText}
+    <Tooltip
+      content={content}
+      side={tooltipSide}
+      align={tooltipAlign}
+      sideOffset={tooltipOffset}
+      delayDuration={tooltipDelay}
+      disabled={!isTruncated}
     >
-      {children}
-      {showTooltip && (
-        <span
-          className={css([
-            styles.tooltip,
-            "ellipsis-tooltip",
-            tooltipClassName,
-          ])}
-        >
-          {tooltipText}
-        </span>
-      )}
-    </Component>
+      <Component
+        ref={textRef}
+        className={css([styles.container, className])}
+        style={style}
+      >
+        {children}
+      </Component>
+    </Tooltip>
   );
 };
 

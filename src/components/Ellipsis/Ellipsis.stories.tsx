@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { css } from "@emotion/css";
 import { Ellipsis, EllipsisProps } from "./Ellipsis";
 
 export default {
@@ -9,7 +10,7 @@ export default {
     docs: {
       description: {
         component:
-          "A component that truncates text with an ellipsis when it overflows its container.",
+          "A component that truncates text with an ellipsis when it overflows its container and shows a tooltip with the full text on hover.",
       },
     },
   },
@@ -33,10 +34,25 @@ export default {
       control: "text",
       description: "Custom tooltip content (defaults to the full text)",
     },
-    tooltipPosition: {
-      control: { type: "select", options: ["top", "bottom", "left", "right"] },
-      description: "Custom position for the tooltip",
+    tooltipSide: {
+      control: { type: "select", options: ["top", "right", "bottom", "left"] },
+      description: "Tooltip position",
       defaultValue: "bottom",
+    },
+    tooltipAlign: {
+      control: { type: "select", options: ["start", "center", "end"] },
+      description: "Tooltip alignment",
+      defaultValue: "center",
+    },
+    tooltipOffset: {
+      control: { type: "number", min: 0, max: 20 },
+      description: "Space between text and tooltip",
+      defaultValue: 5,
+    },
+    tooltipDelay: {
+      control: { type: "number", min: 0, max: 1000, step: 50 },
+      description: "Delay in ms before showing the tooltip",
+      defaultValue: 300,
     },
     allowSelection: {
       control: "boolean",
@@ -121,6 +137,32 @@ export const CustomTooltip: Story = {
   ],
 };
 
+export const RichTooltipContent: Story = {
+  render: (args) => (
+    <div style={{ width: "300px" }}>
+      <Ellipsis
+        {...args}
+        lines={1}
+        tooltipContent={
+          <div>
+            <strong>Full Text:</strong>
+            <div
+              className={css`
+                margin-top: 8px;
+                max-width: 250px;
+              `}
+            >
+              {longText}
+            </div>
+          </div>
+        }
+      >
+        {longText}
+      </Ellipsis>
+    </div>
+  ),
+};
+
 export const DifferentTooltipPositions: Story = {
   render: (args) => (
     <div
@@ -134,7 +176,7 @@ export const DifferentTooltipPositions: Story = {
       <div>
         <h3>Top Position</h3>
         <div style={{ width: "300px", marginTop: "30px" }}>
-          <Ellipsis {...args} tooltipPosition="top">
+          <Ellipsis {...args} tooltipSide="top">
             {longText}
           </Ellipsis>
         </div>
@@ -142,7 +184,7 @@ export const DifferentTooltipPositions: Story = {
       <div>
         <h3>Bottom Position</h3>
         <div style={{ width: "300px" }}>
-          <Ellipsis {...args} tooltipPosition="bottom">
+          <Ellipsis {...args} tooltipSide="bottom">
             {longText}
           </Ellipsis>
         </div>
@@ -150,7 +192,7 @@ export const DifferentTooltipPositions: Story = {
       <div>
         <h3>Left Position</h3>
         <div style={{ width: "300px", marginLeft: "30px" }}>
-          <Ellipsis {...args} tooltipPosition="left">
+          <Ellipsis {...args} tooltipSide="left">
             {longText}
           </Ellipsis>
         </div>
@@ -158,7 +200,78 @@ export const DifferentTooltipPositions: Story = {
       <div>
         <h3>Right Position</h3>
         <div style={{ width: "300px" }}>
-          <Ellipsis {...args} tooltipPosition="right">
+          <Ellipsis {...args} tooltipSide="right">
+            {longText}
+          </Ellipsis>
+        </div>
+      </div>
+    </div>
+  ),
+  args: {
+    lines: 1,
+    showTooltip: true,
+  },
+};
+
+export const TooltipAlignment: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+      <div>
+        <h3>Start Alignment</h3>
+        <div style={{ width: "300px" }}>
+          <Ellipsis {...args} tooltipAlign="start">
+            {longText}
+          </Ellipsis>
+        </div>
+      </div>
+      <div>
+        <h3>Center Alignment</h3>
+        <div style={{ width: "300px" }}>
+          <Ellipsis {...args} tooltipAlign="center">
+            {longText}
+          </Ellipsis>
+        </div>
+      </div>
+      <div>
+        <h3>End Alignment</h3>
+        <div style={{ width: "300px" }}>
+          <Ellipsis {...args} tooltipAlign="end">
+            {longText}
+          </Ellipsis>
+        </div>
+      </div>
+    </div>
+  ),
+  args: {
+    lines: 1,
+    showTooltip: true,
+    tooltipSide: "bottom",
+  },
+};
+
+export const TooltipDelays: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <div>
+        <h3>No Delay</h3>
+        <div style={{ width: "300px" }}>
+          <Ellipsis {...args} tooltipDelay={0}>
+            {longText}
+          </Ellipsis>
+        </div>
+      </div>
+      <div>
+        <h3>Default Delay (300ms)</h3>
+        <div style={{ width: "300px" }}>
+          <Ellipsis {...args} tooltipDelay={300}>
+            {longText}
+          </Ellipsis>
+        </div>
+      </div>
+      <div>
+        <h3>Long Delay (700ms)</h3>
+        <div style={{ width: "300px" }}>
+          <Ellipsis {...args} tooltipDelay={700}>
             {longText}
           </Ellipsis>
         </div>
