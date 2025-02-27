@@ -53,7 +53,7 @@ const getStyles = () => ({
     @keyframes contentShow {
       from {
         opacity: 0;
-        transform: translate(-50%, -48%) scale(0.96);
+        transform: translate(-50%, -50%) scale(0.6);
       }
       to {
         opacity: 1;

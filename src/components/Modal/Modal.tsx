@@ -134,15 +134,11 @@ const getStyles = (size?: ModalProps["size"], centered?: boolean) => {
       @keyframes contentShow {
         from {
           opacity: 0;
-          transform: ${centered
-            ? "translate(-50%, -48%) scale(0.96)"
-            : "translateY(-8px) scale(0.98)"};
+          transform: translate(-50%, -50%) scale(0.6);
         }
         to {
           opacity: 1;
-          transform: ${centered
-            ? "translate(-50%, -50%) scale(1)"
-            : "translateY(0) scale(1)"};
+          transform: translate(-50%, -50%) scale(1);
         }
       }
 
