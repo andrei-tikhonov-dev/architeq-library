@@ -65,190 +65,259 @@ const meta: Meta<typeof Table> = {
 export default meta;
 type Story = StoryObj<typeof Table<TeamMember>>;
 
-const teamData: TeamMember[] = [
-  {
-    id: "1",
-    name: "Alp",
-    email: "alp.bozaci@sbb.ch",
-    taskId: "Back-13678",
-    taskTitle: "Implement login security",
-    type: "Story",
-    status: "In Progress",
-    role: "BACKEND: 100%",
-    storyPoints: 3,
-    inProgress: "12 days",
-    workload: 100,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "2",
-    name: "Sven",
-    email: "sven.birrer@sbb.ch",
-    taskId: "Back-13692",
-    taskTitle: "Fix authentication bug",
-    type: "Bug",
-    status: "Closed",
-    role: "BACKEND: 100%",
-    storyPoints: 2,
-    inProgress: "0 days",
-    workload: 100,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "3",
-    name: "Markus",
-    email: "markus.grabert@sbb.ch",
-    taskId: "Back-13706",
-    taskTitle: "Optimize database queries",
-    type: "Story",
-    status: "Open",
-    role: "BACKEND: 100%",
-    storyPoints: 5,
-    inProgress: "0 days",
-    workload: 100,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "4",
-    name: "Raoul",
-    email: "raoul.paerli@sbb.ch",
-    taskId: "Back-13707",
-    taskTitle: "Update user API documentation",
-    type: "Story",
-    status: "In Progress",
-    role: "BACKEND: 100%",
-    storyPoints: 1,
-    inProgress: "8 days",
-    workload: 90,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "5",
-    name: "Riccardo",
-    email: "riccardo.gorza@sbb.ch",
-    taskId: "Back-13700",
-    taskTitle: "Design new dashboard UI",
-    type: "Story",
-    status: "In Progress",
-    role: "FRONTEND: 100%",
-    storyPoints: 3,
-    inProgress: "4 days",
-    workload: 100,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "6",
-    name: "Eylem",
-    email: "eylem.mehmeti@sbb.ch",
-    taskId: "Back-13637",
-    taskTitle: "Implement responsive layout",
-    type: "Story",
-    status: "Open",
-    role: "FRONTEND: 100%",
-    storyPoints: 2,
-    inProgress: "0 days",
-    workload: 80,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "7",
-    name: "Eris",
-    email: "eris.gurguska@sbb.ch",
-    taskId: "Back-13680",
-    taskTitle: "Fix 'update user capacity bug'",
-    type: "Bug",
-    status: "Closed",
-    role: "No roles",
-    storyPoints: 2,
-    inProgress: "0 days",
-    workload: 100,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "8",
-    name: "Lucien",
-    email: "lucien.oberson@sbb.ch",
-    taskId: "Back-13597",
-    taskTitle: "Add new user Kafka topic",
-    type: "Story",
-    status: "Closed",
-    role: "No roles",
-    storyPoints: 3,
-    inProgress: "17 days",
-    workload: 100,
-    workStartDate: "21.02.2024",
-    workEndDate: "14.05.2025",
-  },
-  {
-    id: "9",
-    name: "Marta",
-    email: "marta.kowalska@sbb.ch",
-    taskId: "Back-13721",
-    taskTitle: "Add user form",
-    type: "Bug",
-    status: "Open",
-    role: "FRONTEND: 100%",
-    storyPoints: 3,
-    inProgress: "0 days",
-    workload: 100,
-    workStartDate: "15.01.2024",
-    workEndDate: "20.03.2024",
-  },
-  {
-    id: "10",
-    name: "Jeanne",
-    email: "jeanne.dupont@sbb.ch",
-    taskId: "Back-13722",
-    taskTitle: "CI/CD improving helm charts",
-    type: "Bug",
-    status: "In Progress",
-    role: "No roles",
-    storyPoints: 3,
-    inProgress: "4 days",
-    workload: 100,
-    workStartDate: "15.01.2024",
-    workEndDate: "20.03.2024",
-  },
-  {
-    id: "11",
-    name: "Michael",
-    email: "michael.schmidt@sbb.ch",
-    taskId: "Back-13723",
-    taskTitle: "Design documentation",
-    type: "Story",
-    status: "In Progress",
-    role: "FRONTEND: 100%",
-    storyPoints: 0,
-    inProgress: "25 days",
-    workload: 90,
-    workStartDate: "01.12.2023",
-    workEndDate: "31.03.2024",
-  },
-  {
-    id: "12",
-    name: "Kaan",
-    email: "kaan.kaplan@sbb.ch",
-    taskId: "Back-13724",
-    taskTitle: "Improve DB performance",
-    type: "Story",
-    status: "Open",
-    role: "No roles",
-    storyPoints: 1,
-    inProgress: "0 days",
-    workload: 100,
-    workStartDate: "21.02.2023",
-    workEndDate: "14.05.2023",
-  },
-];
+const getRandomName = () => {
+  const firstNames = [
+    "Alp",
+    "Sven",
+    "Markus",
+    "Raoul",
+    "Riccardo",
+    "Eylem",
+    "Eris",
+    "Lucien",
+    "Marta",
+    "Jeanne",
+    "Michael",
+    "Kaan",
+    "Julia",
+    "Andreas",
+    "Stefan",
+    "Nina",
+    "Thomas",
+    "Sophie",
+    "Peter",
+    "Anna",
+    "Maria",
+    "Jan",
+    "Lisa",
+    "David",
+    "Sarah",
+    "Lukas",
+    "Laura",
+    "Felix",
+    "Lena",
+    "Daniel",
+    "Emma",
+    "Jonas",
+    "Hannah",
+    "Maximilian",
+    "Johanna",
+    "Philip",
+    "Katharina",
+    "Alexander",
+    "Eva",
+    "Tim",
+  ];
 
-// Первый набор колонок - для представления команды (как на первом изображении)
+  const lastNames = [
+    "Bozaci",
+    "Birrer",
+    "Grabert",
+    "Paerli",
+    "Gorza",
+    "Mehmeti",
+    "Gurguska",
+    "Oberson",
+    "Kowalska",
+    "Dupont",
+    "Schmidt",
+    "Kaplan",
+    "Weber",
+    "Müller",
+    "Schneider",
+    "Wagner",
+    "Fischer",
+    "Meyer",
+    "Lehmann",
+    "Huber",
+    "Keller",
+    "Schulz",
+    "Maier",
+    "Bauer",
+    "Walter",
+    "Hoffmann",
+    "Richter",
+    "Wolf",
+    "Becker",
+    "Schmitz",
+    "Hartmann",
+    "König",
+    "Lang",
+    "Schwarz",
+    "Zimmermann",
+    "Braun",
+    "Krause",
+    "Hofmann",
+    "Werner",
+    "Schmid",
+  ];
+
+  const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+
+  return `${firstName} ${lastName}`;
+};
+
+const getRandomEmail = (name: string) => {
+  const nameParts = name.toLowerCase().split(" ");
+  return `${nameParts[0]}.${nameParts[1]}@sbb.ch`;
+};
+
+const getRandomTaskTitle = () => {
+  const actions = [
+    "Implement",
+    "Fix",
+    "Update",
+    "Create",
+    "Design",
+    "Optimize",
+    "Refactor",
+    "Add",
+    "Remove",
+    "Test",
+    "Document",
+  ];
+  const objects = [
+    "login",
+    "authentication",
+    "database",
+    "user interface",
+    "API",
+    "dashboard",
+    "layout",
+    "module",
+    "functionality",
+    "query",
+    "component",
+    "form",
+    "feature",
+    "documentation",
+    "security",
+    "reporting",
+    "search",
+    "filter",
+    "pagination",
+    "performance",
+  ];
+  const details = [
+    "system",
+    "service",
+    "logic",
+    "algorithm",
+    "process",
+    "infrastructure",
+    "module",
+    "framework",
+    "library",
+    "integration",
+  ];
+
+  const action = actions[Math.floor(Math.random() * actions.length)];
+  const object = objects[Math.floor(Math.random() * objects.length)];
+  const detail =
+    Math.random() > 0.5
+      ? ` ${details[Math.floor(Math.random() * details.length)]}`
+      : "";
+
+  return `${action} ${object}${detail}`;
+};
+
+const getRandomTaskId = () => {
+  const prefixes = [
+    "Back",
+    "Front",
+    "Dev",
+    "QA",
+    "UX",
+    "UI",
+    "Infra",
+    "Ops",
+    "Doc",
+  ];
+  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+  const number = Math.floor(10000 + Math.random() * 90000);
+
+  return `${prefix}-${number}`;
+};
+
+const getRandomRole = () => {
+  const roles = [
+    "BACKEND: 100%",
+    "FRONTEND: 100%",
+    "FULLSTACK: 100%",
+    "QA: 100%",
+    "DEVOPS: 100%",
+    "UX/UI: 100%",
+    "No roles",
+  ];
+  return roles[Math.floor(Math.random() * roles.length)] as string;
+};
+
+const getRandomStoryPoints = () => {
+  return Math.floor(Math.random() * 8) + 1;
+};
+
+const getRandomWorkload = (): number => {
+  return (Math.floor(Math.random() * 50) + 50) as number;
+};
+
+const getRandomStatus = (): string => {
+  const statuses = ["In Progress", "Open", "Closed"];
+  return statuses[Math.floor(Math.random() * statuses.length)] as string;
+};
+
+const getRandomType = () => {
+  return Math.random() > 0.3 ? "Story" : "Bug";
+};
+
+const getRandomInProgress = (status: string) => {
+  if (status === "Open" || status === "Closed") {
+    return "0 days";
+  }
+  return `${Math.floor(Math.random() * 30) + 1} days`;
+};
+
+const getRandomDate = (startYear = 2023, endYear = 2025) => {
+  const year =
+    startYear + Math.floor(Math.random() * (endYear - startYear + 1));
+  const month = Math.floor(Math.random() * 12) + 1;
+  const day = Math.floor(Math.random() * 28) + 1; // избегаем проблем с разным количеством дней в месяцах
+
+  return `${day.toString().padStart(2, "0")}.${month
+    .toString()
+    .padStart(2, "0")}.${year}`;
+};
+
+const generateTeamData = (count = 50) => {
+  const data: TeamMember[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const name = getRandomName();
+    const status = getRandomStatus() as "In Progress" | "Open" | "Closed";
+    const type = getRandomType();
+
+    data.push({
+      id: i.toString(),
+      name,
+      email: getRandomEmail(name),
+      taskId: getRandomTaskId(),
+      taskTitle: getRandomTaskTitle(),
+      type,
+      status,
+      role: getRandomRole(),
+      storyPoints: getRandomStoryPoints(),
+      inProgress: getRandomInProgress(status),
+      workload: getRandomWorkload(),
+      workStartDate: getRandomDate(2023, 2024),
+      workEndDate: getRandomDate(2024, 2025),
+    });
+  }
+
+  return data;
+};
+
+const teamData: TeamMember[] = generateTeamData(105);
+
 const teamColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
