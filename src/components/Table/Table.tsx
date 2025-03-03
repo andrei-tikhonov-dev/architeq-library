@@ -33,6 +33,7 @@ interface TableProps<T extends object> {
 const getStyles = (striped?: boolean) => ({
   table: css`
     width: 100%;
+    table-layout: fixed; /* Critical for fixed width columns */
     border-collapse: collapse;
     background: ${theme.colors.background.primary};
     font-family: ${theme.fontFamily};
@@ -52,6 +53,9 @@ const getStyles = (striped?: boolean) => ({
     background: ${theme.colors.background.secondary};
     border-bottom: 1px solid ${theme.colors.background.secondary};
     user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   `,
   td: css`
     padding: ${theme.spacing.md} ${theme.spacing.lg};
@@ -69,17 +73,9 @@ const getStyles = (striped?: boolean) => ({
     }
   `,
   row: css`
-    &:hover {
-      background: ${theme.colors.background.overlay};
-    }
-
     ${striped &&
     `&:nth-of-type(even) {
        background: ${theme.colors.background.secondary};
-
-       &:hover {
-         background: ${theme.colors.background.overlay};
-       }
      }`}
   `,
   pagination: css`
@@ -111,6 +107,11 @@ const getStyles = (striped?: boolean) => ({
       background: ${theme.colors.background.secondary};
     }
   `,
+  // Column width styles
+  columnWidth: (width?: number) => css`
+    ${width ? `width: ${width}px;` : ""}
+    min-width: 50px;
+  `,
 });
 
 export function Table<T extends object>({
@@ -131,9 +132,15 @@ export function Table<T extends object>({
     pageSize: pageSize,
   });
 
+  // Set default column sizes if not specified
+  const columnsWithDefaults = columns.map((column) => ({
+    ...column,
+    size: column.size || 150, // Default column width
+  }));
+
   const table = useReactTable({
     data,
-    columns,
+    columns: columnsWithDefaults,
     state: {
       sorting,
       columnFilters,
@@ -170,7 +177,7 @@ export function Table<T extends object>({
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {onRowSelect && (
-                <th className={styles.th}>
+                <th className={styles.th} style={{ width: "40px" }}>
                   <Checkbox
                     size="sm"
                     variant="primary"
@@ -181,34 +188,43 @@ export function Table<T extends object>({
                   />
                 </th>
               )}
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className={styles.th}>
-                  {header.isPlaceholder ? null : (
-                    <div
-                      className={
-                        enableSorting && header.column.getCanSort()
-                          ? styles.sortHeader
-                          : ""
-                      }
-                      onClick={
-                        enableSorting && header.column.getCanSort()
-                          ? header.column.getToggleSortingHandler()
-                          : undefined
-                      }
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                      {{
-                        asc: <Icon name="ArrowDropUp" size="sm" />,
-                        desc: <Icon name="ArrowDropDown" size="sm" />,
-                      }[header.column.getIsSorted() as string] ?? null}
-                    </div>
-                  )}
-                </th>
-              ))}
-              <th className={styles.th}>Actions</th>
+              {headerGroup.headers.map((header) => {
+                const columnSize = header.column.columnDef.size as number;
+                return (
+                  <th
+                    key={header.id}
+                    className={`${styles.th} ${styles.columnWidth(columnSize)}`}
+                    style={{ width: `${columnSize}px` }}
+                  >
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className={
+                          enableSorting && header.column.getCanSort()
+                            ? styles.sortHeader
+                            : ""
+                        }
+                        onClick={
+                          enableSorting && header.column.getCanSort()
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: <Icon name="ArrowDropUp" size="sm" />,
+                          desc: <Icon name="ArrowDropDown" size="sm" />,
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
+                  </th>
+                );
+              })}
+              <th className={styles.th} style={{ width: "60px" }}>
+                Actions
+              </th>
             </tr>
           ))}
         </thead>
@@ -216,7 +232,7 @@ export function Table<T extends object>({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className={styles.row}>
               {onRowSelect && (
-                <td className={styles.td}>
+                <td className={styles.td} style={{ width: "40px" }}>
                   <Checkbox
                     size="sm"
                     variant="primary"
@@ -226,12 +242,19 @@ export function Table<T extends object>({
                   />
                 </td>
               )}
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className={styles.td}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-              <td className={styles.td}>
+              {row.getVisibleCells().map((cell) => {
+                const columnSize = cell.column.columnDef.size as number;
+                return (
+                  <td
+                    key={cell.id}
+                    className={styles.td}
+                    style={{ width: `${columnSize}px` }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                );
+              })}
+              <td className={styles.td} style={{ width: "60px" }}>
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
                     <IconButton

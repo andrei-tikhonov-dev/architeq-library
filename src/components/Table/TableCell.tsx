@@ -13,93 +13,74 @@ export const TableCell: React.FC<TableCellProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [hasOverflow, setHasOverflow] = useState(false);
-  const cellRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [expandedStyle, setExpandedStyle] = useState({});
 
-  // Проверяем, есть ли переполнение контента
+  // Check for content overflow
   useEffect(() => {
     const checkOverflow = () => {
-      if (contentRef.current && cellRef.current) {
+      if (contentRef.current) {
         const hasTextOverflow =
-          contentRef.current.scrollWidth > cellRef.current.clientWidth;
+          contentRef.current.scrollWidth > contentRef.current.clientWidth;
         setHasOverflow(hasTextOverflow);
       }
     };
 
-    checkOverflow();
+    // Wait for layout to complete
+    const timer = setTimeout(() => {
+      checkOverflow();
+    }, 0);
+
     window.addEventListener("resize", checkOverflow);
-    return () => window.removeEventListener("resize", checkOverflow);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkOverflow);
+    };
   }, [children]);
 
-  // Вычисляем размеры и положение расширенного контейнера при наведении
-  useEffect(() => {
-    if (isHovered && cellRef.current) {
-      const cellRect = cellRef.current.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-
-      // Расширяем на 20% вправо, но не выходя за пределы экрана
-      const expandedWidth = Math.min(
-        cellRect.width * 1.2,
-        viewportWidth - cellRect.left - 10
-      );
-
-      // Максимальная высота - оставляем 10px до края экрана
-      const maxHeight = viewportHeight - cellRect.top - 10;
-
-      setExpandedStyle({
-        position: "absolute",
-        left: 0,
-        top: 0,
-        width: `${expandedWidth}px`,
-        maxHeight: `${maxHeight}px`,
-        zIndex: 10,
-      });
-    }
-  }, [isHovered]);
-
   const styles = {
-    cell: css`
+    cellContainer: css`
       position: relative;
       width: 100%;
       height: 100%;
+      margin: -${theme.spacing.md} -${theme.spacing.lg};
     `,
     content: css`
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: 100%;
+      white-space: nowrap;
+      display: block;
+      padding: ${theme.spacing.md} ${theme.spacing.lg};
     `,
     expandedContent: css`
+      position: absolute;
+      left: 0;
+      top: -12px;
       background-color: ${theme.colors.background.primary};
       border: 1px solid ${theme.colors.background.secondary};
-      border-radius: ${theme.border.radius.sm};
-      box-shadow: ${theme.shadows.md};
-      padding: ${theme.spacing.md};
-      white-space: normal;
+      padding: 11px 16px;
       overflow-y: auto;
       overflow-x: hidden;
-      max-width: 100%;
+      color: ${theme.colors.text.default};
+      z-index: 1000;
+      margin: 0 -80px 0 0;
     `,
   };
 
   return (
     <div
-      ref={cellRef}
-      className={`${styles.cell} ${className || ""}`}
-      onMouseEnter={() => hasOverflow && setIsHovered(true)}
+      className={`${styles.cellContainer} ${className || ""}`}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div ref={contentRef} className={styles.content}>
+      <div
+        ref={contentRef}
+        className={
+          isHovered && hasOverflow ? styles.expandedContent : styles.content
+        }
+      >
         {children}
       </div>
-
-      {isHovered && hasOverflow && (
-        <div className={styles.expandedContent} style={expandedStyle}>
-          {children}
-        </div>
-      )}
     </div>
   );
 };
