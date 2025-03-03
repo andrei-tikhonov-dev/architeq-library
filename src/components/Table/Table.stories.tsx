@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import theme from "../../contstants/theme";
 import { Icon } from "../Icon";
 import { Table } from "./Table";
+import { TableCell } from "./TableCell";
 
 interface TeamMember {
   id: string;
@@ -18,6 +19,7 @@ interface TeamMember {
   workload: number;
   workStartDate: string;
   workEndDate: string;
+  description?: string; // Added for long text examples
 }
 
 const meta: Meta<typeof Table> = {
@@ -59,7 +61,7 @@ const meta: Meta<typeof Table> = {
       description: "Number of rows per page",
       defaultValue: 10,
     },
-    // Удалили onRowSelect из общих argTypes
+    // Removed onRowSelect from common argTypes
   },
 };
 
@@ -223,6 +225,19 @@ const getRandomTaskTitle = () => {
   return `${action} ${object}${detail}`;
 };
 
+// Function to generate long texts for TableCell demonstration
+const getLongTaskDescription = (taskTitle: string) => {
+  const descriptions = [
+    `This task involves ${taskTitle.toLowerCase()} which requires extensive work across multiple services and components. The developer will need to ensure backward compatibility and proper error handling throughout the implementation. This should include comprehensive logging and monitoring. All changes should be thoroughly tested in QA and staging environments before deployment.`,
+    `Implementation of ${taskTitle.toLowerCase()} must include proper documentation, unit tests, and integration tests. The UI changes should be reviewed by the design team before submission. Performance benchmarks should be established to ensure the implementation meets our standards. Cross-browser compatibility testing is required for all UI components.`,
+    `This ${taskTitle.toLowerCase()} task is a high priority item that needs to be completed before the upcoming release. It involves refactoring existing code to improve performance and maintainability. Code review by at least two senior developers is required. The implementation should follow SOLID principles and our established coding standards.`,
+    `${taskTitle} requires coordination with the backend team to ensure proper API integration. The implementation should follow our coding standards and include comprehensive test coverage. Security review is mandatory for this feature as it involves user data handling. Documentation should include examples of typical usage scenarios and edge cases.`,
+    `This is a complex task that involves ${taskTitle.toLowerCase()} and requires deep understanding of the system architecture. The developer needs to consider potential impacts on other system components. A phased implementation approach is recommended, with feature flags to control rollout. Load testing should be performed to validate the solution under production-like conditions.`,
+  ];
+
+  return descriptions[Math.floor(Math.random() * descriptions.length)];
+};
+
 const getRandomTaskId = () => {
   const prefixes = [
     "Back",
@@ -282,7 +297,7 @@ const getRandomDate = (startYear = 2023, endYear = 2025) => {
   const year =
     startYear + Math.floor(Math.random() * (endYear - startYear + 1));
   const month = Math.floor(Math.random() * 12) + 1;
-  const day = Math.floor(Math.random() * 28) + 1; // избегаем проблем с разным количеством дней в месяцах
+  const day = Math.floor(Math.random() * 28) + 1; // avoid problems with different days in months
 
   return `${day.toString().padStart(2, "0")}.${month
     .toString()
@@ -296,13 +311,14 @@ const generateTeamData = (count = 50) => {
     const name = getRandomName();
     const status = getRandomStatus() as "In Progress" | "Open" | "Closed";
     const type = getRandomType();
+    const taskTitle = getRandomTaskTitle();
 
     data.push({
       id: i.toString(),
       name,
       email: getRandomEmail(name),
       taskId: getRandomTaskId(),
-      taskTitle: getRandomTaskTitle(),
+      taskTitle,
       type,
       status,
       role: getRandomRole(),
@@ -311,6 +327,7 @@ const generateTeamData = (count = 50) => {
       workload: getRandomWorkload(),
       workStartDate: getRandomDate(2023, 2024),
       workEndDate: getRandomDate(2024, 2025),
+      description: getLongTaskDescription(taskTitle),
     });
   }
 
@@ -357,7 +374,7 @@ const teamColumns: Array<ColumnDef<TeamMember>> = [
   },
 ];
 
-// Второй набор колонок - для представления задач (как на втором изображении)
+// Second set of columns - for task representation
 const taskColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
@@ -427,7 +444,96 @@ const taskColumns: Array<ColumnDef<TeamMember>> = [
   },
 ];
 
-// Таблица с данными команды
+// Columns for TableCell demonstration with long texts
+const tableCellColumns: Array<ColumnDef<TeamMember>> = [
+  {
+    accessorKey: "name",
+    header: "Team member",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "taskId",
+    header: "ID",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "taskTitle",
+    header: "Task Title",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: (info) => {
+      const status = info.getValue() as "In Progress" | "Open" | "Closed";
+      const statusStyles = {
+        "In Progress": { color: theme.colors.statuses.info },
+        Open: { color: theme.colors.statuses.warning },
+        Closed: { color: theme.colors.statuses.success },
+      };
+      return (
+        <TableCell>
+          <span style={statusStyles[status]}>{status}</span>
+        </TableCell>
+      );
+    },
+  },
+];
+
+// Columns specifically for demonstrating overflow behavior
+const longTextColumns: Array<ColumnDef<TeamMember>> = [
+  {
+    accessorKey: "name",
+    header: "Team member",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "taskId",
+    header: "ID",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+  },
+  {
+    accessorKey: "taskTitle",
+    header: "Task Title",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+    size: 200, // Limit width to ensure overflow
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
+    size: 250, // Limit width to ensure overflow
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: (info) => {
+      const status = info.getValue() as "In Progress" | "Open" | "Closed";
+      const statusStyles = {
+        "In Progress": { color: theme.colors.statuses.info },
+        Open: { color: theme.colors.statuses.warning },
+        Closed: { color: theme.colors.statuses.success },
+      };
+      return (
+        <TableCell>
+          <span style={statusStyles[status]}>{status}</span>
+        </TableCell>
+      );
+    },
+  },
+];
+
+// Table with team data
 export const TeamTable: Story = {
   args: {
     data: teamData,
@@ -436,11 +542,11 @@ export const TeamTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: undefined, // Явно устанавливаем undefined
+    onRowSelect: undefined, // Explicitly set to undefined
   },
 };
 
-// Таблица с данными о задачах
+// Table with task data
 export const TaskTable: Story = {
   args: {
     data: teamData,
@@ -449,11 +555,11 @@ export const TaskTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: undefined, // Явно устанавливаем undefined
+    onRowSelect: undefined, // Explicitly set to undefined
   },
 };
 
-// Таблица с полосками (striped)
+// Table with stripes
 export const StripedTable: Story = {
   args: {
     data: teamData,
@@ -463,11 +569,11 @@ export const StripedTable: Story = {
     enablePagination: true,
     pageSize: 10,
     striped: true,
-    onRowSelect: undefined, // Явно устанавливаем undefined
+    onRowSelect: undefined, // Explicitly set to undefined
   },
 };
 
-// Таблица без пагинации
+// Table without pagination
 export const WithoutPagination: Story = {
   args: {
     data: teamData,
@@ -476,11 +582,11 @@ export const WithoutPagination: Story = {
     enableFiltering: true,
     enablePagination: false,
     pageSize: 10,
-    onRowSelect: undefined, // Явно устанавливаем undefined
+    onRowSelect: undefined, // Explicitly set to undefined
   },
 };
 
-// Таблица без сортировки
+// Table without sorting
 export const WithoutSorting: Story = {
   args: {
     data: teamData,
@@ -489,11 +595,11 @@ export const WithoutSorting: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: undefined, // Явно устанавливаем undefined
+    onRowSelect: undefined, // Explicitly set to undefined
   },
 };
 
-// Новая история с возможностью выбора строк
+// New story with row selection capability
 export const WithRowSelection: Story = {
   args: {
     data: teamData,
@@ -506,7 +612,7 @@ export const WithRowSelection: Story = {
       console.log("Selected rows:", selectedRows);
     },
   },
-  // Добавляем argTypes специально для этой истории
+  // Add argTypes specifically for this story
   argTypes: {
     onRowSelect: {
       description: "Callback function for selected rows",
@@ -517,13 +623,13 @@ export const WithRowSelection: Story = {
     docs: {
       description: {
         story:
-          "Таблица с возможностью выбора строк. При выборе строк вызывается функция обратного вызова onRowSelect.",
+          "Table with row selection capability. When rows are selected, the onRowSelect callback function is triggered.",
       },
     },
   },
 };
 
-// Таблица с меньшим размером страницы
+// Table with smaller page size
 export const CustomPageSize: Story = {
   args: {
     data: teamData,
@@ -532,6 +638,48 @@ export const CustomPageSize: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 5,
-    onRowSelect: undefined, // Явно устанавливаем undefined
+    onRowSelect: undefined, // Explicitly set to undefined
+  },
+};
+
+// Table using TableCell component
+export const WithTableCell: Story = {
+  args: {
+    data: teamData,
+    columns: tableCellColumns,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
+    onRowSelect: undefined,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Table using the TableCell component to handle long content. When hovering over a cell with overflowing content, it will expand without disrupting the table structure.",
+      },
+    },
+  },
+};
+
+// Table with long text content that demonstrates overflow behavior
+export const WithLongTextContent: Story = {
+  args: {
+    data: teamData,
+    columns: longTextColumns,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
+    onRowSelect: undefined,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Table with long text content that demonstrates the overflow behavior of the TableCell component. The cells with Task Title and Description contain lengthy text that doesn't fit within the cell width. Hover over these cells to see the expanded content.",
+      },
+    },
   },
 };
