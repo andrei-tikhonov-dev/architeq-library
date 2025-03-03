@@ -59,6 +59,7 @@ const meta: Meta<typeof Table> = {
       description: "Number of rows per page",
       defaultValue: 10,
     },
+    // Удалили onRowSelect из общих argTypes
   },
 };
 
@@ -435,8 +436,7 @@ export const TeamTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: (selectedRows: any) =>
-      console.log("Selected rows:", selectedRows),
+    onRowSelect: undefined, // Явно устанавливаем undefined
   },
 };
 
@@ -449,41 +449,76 @@ export const TaskTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: (selectedRows: any) =>
-      console.log("Selected rows:", selectedRows),
+    onRowSelect: undefined, // Явно устанавливаем undefined
   },
 };
 
 // Таблица с полосками (striped)
 export const StripedTable: Story = {
   args: {
-    ...TeamTable.args,
+    data: teamData,
+    columns: teamColumns,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
     striped: true,
+    onRowSelect: undefined, // Явно устанавливаем undefined
   },
 };
 
 // Таблица без пагинации
 export const WithoutPagination: Story = {
   args: {
-    ...TaskTable.args,
+    data: teamData,
+    columns: taskColumns,
+    enableSorting: true,
+    enableFiltering: true,
     enablePagination: false,
+    pageSize: 10,
+    onRowSelect: undefined, // Явно устанавливаем undefined
   },
 };
 
 // Таблица без сортировки
 export const WithoutSorting: Story = {
   args: {
-    ...TeamTable.args,
+    data: teamData,
+    columns: teamColumns,
     enableSorting: false,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
+    onRowSelect: undefined, // Явно устанавливаем undefined
   },
 };
 
-// Таблица с отбором одной строки
+// Новая история с возможностью выбора строк
 export const WithRowSelection: Story = {
   args: {
-    ...TaskTable.args,
-    onRowSelect: (selectedRows: any) => {
-      console.log("Selected row:", selectedRows);
+    data: teamData,
+    columns: taskColumns,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
+    onRowSelect: (selectedRows: TeamMember[]) => {
+      console.log("Selected rows:", selectedRows);
+    },
+  },
+  // Добавляем argTypes специально для этой истории
+  argTypes: {
+    onRowSelect: {
+      description: "Callback function for selected rows",
+      action: "selected",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Таблица с возможностью выбора строк. При выборе строк вызывается функция обратного вызова onRowSelect.",
+      },
     },
   },
 };
@@ -491,7 +526,12 @@ export const WithRowSelection: Story = {
 // Таблица с меньшим размером страницы
 export const CustomPageSize: Story = {
   args: {
-    ...TeamTable.args,
+    data: teamData,
+    columns: teamColumns,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
     pageSize: 5,
+    onRowSelect: undefined, // Явно устанавливаем undefined
   },
 };

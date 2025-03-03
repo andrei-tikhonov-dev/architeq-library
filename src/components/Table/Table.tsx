@@ -137,18 +137,17 @@ export function Table<T extends object>({
     state: {
       sorting,
       columnFilters,
-      rowSelection,
+      ...(onRowSelect ? { rowSelection } : {}),
       ...(enablePagination ? { pagination } : {}),
     },
-    enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
+    enableRowSelection: !!onRowSelect,
+    ...(onRowSelect ? { onRowSelectionChange: setRowSelection } : {}),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     ...(enablePagination ? { onPaginationChange: setPagination } : {}),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    // Применяем модель пагинации только если она включена
     ...(enablePagination
       ? { getPaginationRowModel: getPaginationRowModel() }
       : {}),
@@ -170,16 +169,18 @@ export function Table<T extends object>({
         <thead className={styles.thead}>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              <th className={styles.th}>
-                <Checkbox
-                  size="sm"
-                  variant="primary"
-                  checked={table.getIsAllRowsSelected()}
-                  onCheckedChange={(checked) =>
-                    table.toggleAllRowsSelected(!!checked)
-                  }
-                />
-              </th>
+              {onRowSelect && (
+                <th className={styles.th}>
+                  <Checkbox
+                    size="sm"
+                    variant="primary"
+                    checked={table.getIsAllRowsSelected()}
+                    onCheckedChange={(checked) =>
+                      table.toggleAllRowsSelected(!!checked)
+                    }
+                  />
+                </th>
+              )}
               {headerGroup.headers.map((header) => (
                 <th key={header.id} className={styles.th}>
                   {header.isPlaceholder ? null : (
@@ -214,15 +215,17 @@ export function Table<T extends object>({
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className={styles.row}>
-              <td className={styles.td}>
-                <Checkbox
-                  size="sm"
-                  variant="primary"
-                  checked={row.getIsSelected()}
-                  onCheckedChange={(checked) => row.toggleSelected(!!checked)}
-                  aria-label={`Select row ${row.id}`}
-                />
-              </td>
+              {onRowSelect && (
+                <td className={styles.td}>
+                  <Checkbox
+                    size="sm"
+                    variant="primary"
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(checked) => row.toggleSelected(!!checked)}
+                    aria-label={`Select row ${row.id}`}
+                  />
+                </td>
+              )}
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className={styles.td}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
