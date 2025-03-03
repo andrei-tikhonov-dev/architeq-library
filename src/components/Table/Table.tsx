@@ -138,17 +138,20 @@ export function Table<T extends object>({
       sorting,
       columnFilters,
       rowSelection,
-      pagination,
+      ...(enablePagination ? { pagination } : {}),
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onPaginationChange: setPagination,
+    ...(enablePagination ? { onPaginationChange: setPagination } : {}),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // Применяем модель пагинации только если она включена
+    ...(enablePagination
+      ? { getPaginationRowModel: getPaginationRowModel() }
+      : {}),
     enableSorting: enableSorting,
   });
 
