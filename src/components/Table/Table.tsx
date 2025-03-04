@@ -15,7 +15,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { css } from "@emotion/css";
 import theme from "../../contstants/theme";
 import { IconButton } from "../IconButton";
-import { Icon } from "../Icon";
 import { Pagination } from "../Pagination";
 import { Checkbox } from "../Checkbox";
 
@@ -46,16 +45,23 @@ const getStyles = (striped?: boolean) => ({
     background: ${theme.colors.background.primary};
   `,
   th: css`
+    padding: 0;
+    background: ${theme.colors.background.secondary};
+    border: 1px solid red;
+    overflow: hidden;
+  `,
+  thContent: css`
     padding: ${theme.spacing.md} ${theme.spacing.lg};
     text-align: left;
     font-weight: 500;
     color: ${theme.colors.text.light};
-    background: ${theme.colors.background.secondary};
-    border-bottom: 1px solid ${theme.colors.background.secondary};
     user-select: none;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    height: 100%;
   `,
   td: css`
     padding: ${theme.spacing.md} ${theme.spacing.lg};
@@ -107,11 +113,6 @@ const getStyles = (striped?: boolean) => ({
       background: ${theme.colors.background.secondary};
     }
   `,
-  // Column width styles
-  columnWidth: (width?: number) => css`
-    ${width ? `width: ${width}px;` : ""}
-    min-width: 50px;
-  `,
 });
 
 export function Table<T extends object>({
@@ -121,7 +122,7 @@ export function Table<T extends object>({
   enableSorting = true,
   enablePagination = true,
   striped = false,
-  pageSize = 10, // Default pageSize
+  pageSize = 10,
 }: TableProps<T>) {
   const styles = getStyles(striped);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -132,15 +133,9 @@ export function Table<T extends object>({
     pageSize: pageSize,
   });
 
-  // Set default column sizes if not specified
-  const columnsWithDefaults = columns.map((column) => ({
-    ...column,
-    size: column.size || 150, // Default column width
-  }));
-
   const table = useReactTable({
     data,
-    columns: columnsWithDefaults,
+    columns,
     state: {
       sorting,
       columnFilters,
@@ -159,6 +154,8 @@ export function Table<T extends object>({
       ? { getPaginationRowModel: getPaginationRowModel() }
       : {}),
     enableSorting: enableSorting,
+    enableColumnResizing: true,
+    columnResizeMode: "onChange",
   });
 
   useEffect(() => {
@@ -189,34 +186,75 @@ export function Table<T extends object>({
                 </th>
               )}
               {headerGroup.headers.map((header) => {
-                const columnSize = header.column.columnDef.size as number;
                 return (
                   <th
                     key={header.id}
-                    className={`${styles.th} ${styles.columnWidth(columnSize)}`}
-                    style={{ width: `${columnSize}px` }}
+                    className={styles.th}
+                    style={{ width: `${header.getSize()}px` }}
                   >
                     {header.isPlaceholder ? null : (
-                      <div
-                        className={
-                          enableSorting && header.column.getCanSort()
-                            ? styles.sortHeader
-                            : ""
-                        }
-                        onClick={
-                          enableSorting && header.column.getCanSort()
-                            ? header.column.getToggleSortingHandler()
-                            : undefined
-                        }
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{
-                          asc: <Icon name="ArrowDropUp" size="sm" />,
-                          desc: <Icon name="ArrowDropDown" size="sm" />,
-                        }[header.column.getIsSorted() as string] ?? null}
+                      <div className={styles.thContent}>
+                        <div
+                          className={css`
+                            display: flex;
+                            align-items: center;
+                            gap: ${theme.spacing.sm};
+                          `}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+
+                          {enableSorting && header.column.getCanSort() && (
+                            <IconButton
+                              name={
+                                header.column.getIsSorted() === "asc"
+                                  ? "ArrowDropUp"
+                                  : header.column.getIsSorted() === "desc"
+                                  ? "ArrowDropDown"
+                                  : "Sort"
+                              }
+                              size="sm"
+                              onClick={header.column.getToggleSortingHandler()}
+                            />
+                          )}
+                        </div>
+
+                        <div
+                          className={css`
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            height: 100%;
+                            width: ${theme.spacing.md};
+                            cursor: col-resize;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            &:hover {
+                              background-color: ${theme.colors.background
+                                .primary};
+                            }
+
+                            &:active {
+                              background-color: ${theme.colors.background
+                                .secondary};
+                            }
+                          `}
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                        >
+                          <div
+                            className={css`
+                              height: 70%;
+                              width: 2px;
+                              background-color: ${theme.colors.background
+                                .primary};
+                            `}
+                          />
+                        </div>
                       </div>
                     )}
                   </th>
