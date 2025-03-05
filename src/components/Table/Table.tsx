@@ -204,25 +204,31 @@ export function Table<T extends object>({
                     key={header.id}
                     className={styles.th}
                     style={{ width: `${header.getSize()}px` }}
-                    draggable={true}
-                    onDragStart={(e) => {
-                      e.dataTransfer.setData("text/plain", header.id);
-                    }}
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => {
-                      const draggedColumnId =
-                        e.dataTransfer.getData("text/plain");
-                      reorderColumn(draggedColumnId, header.id);
-                    }}
                   >
-                    {header.isPlaceholder ? null : (
+                    {!header.isPlaceholder && (
                       <div className={styles.thContent}>
+                        {/* Draggable content */}
                         <div
                           className={css`
                             display: flex;
                             align-items: center;
                             gap: ${theme.spacing.sm};
+                            flex: 1;
+                            cursor: ${header.column.getCanSort()
+                              ? "pointer"
+                              : "default"};
+                            user-select: none;
                           `}
+                          draggable={true}
+                          onDragStart={(e) => {
+                            e.dataTransfer.setData("text/plain", header.id);
+                          }}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={(e) => {
+                            const draggedColumnId =
+                              e.dataTransfer.getData("text/plain");
+                            reorderColumn(draggedColumnId, header.id);
+                          }}
                         >
                           {flexRender(
                             header.column.columnDef.header,
@@ -244,6 +250,7 @@ export function Table<T extends object>({
                           )}
                         </div>
 
+                        {/* Resizer (completely separate from draggable content) */}
                         <div
                           className={css`
                             position: absolute;
@@ -255,6 +262,7 @@ export function Table<T extends object>({
                             display: flex;
                             align-items: center;
                             justify-content: center;
+                            z-index: 1;
 
                             &:hover {
                               background-color: ${theme.colors.background
@@ -266,8 +274,19 @@ export function Table<T extends object>({
                                 .secondary};
                             }
                           `}
-                          onMouseDown={header.getResizeHandler()}
-                          onTouchStart={header.getResizeHandler()}
+                          onMouseDown={(e) => {
+                            e.stopPropagation();
+                            header.getResizeHandler()(e);
+                          }}
+                          onTouchStart={(e) => {
+                            e.stopPropagation();
+                            header.getResizeHandler()(e);
+                          }}
+                          onClick={(e) => {
+                            // Prevent click event from bubbling up
+                            e.stopPropagation();
+                          }}
+                          draggable={false}
                         >
                           <div
                             className={css`
@@ -276,13 +295,14 @@ export function Table<T extends object>({
                               background-color: ${theme.colors.background
                                 .primary};
                             `}
+                            draggable={false}
                           />
                         </div>
                       </div>
                     )}
                   </th>
                 );
-              })}
+              })}{" "}
               <th className={styles.th} style={{ width: "90px" }}>
                 <div className={styles.thContent}>Actions</div>
               </th>
