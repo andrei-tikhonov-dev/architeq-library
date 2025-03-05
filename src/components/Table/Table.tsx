@@ -47,7 +47,6 @@ const getStyles = (striped?: boolean) => ({
   th: css`
     padding: 0;
     background: ${theme.colors.background.secondary};
-    border: 1px solid red;
     overflow: hidden;
   `,
   thContent: css`
@@ -56,7 +55,6 @@ const getStyles = (striped?: boolean) => ({
     font-weight: 500;
     color: ${theme.colors.text.light};
     user-select: none;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -126,6 +124,9 @@ export function Table<T extends object>({
 }: TableProps<T>) {
   const styles = getStyles(striped);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnOrder, setColumnOrder] = useState<string[]>(() =>
+    columns.map((column: any) => column.accessorKey as string)
+  );
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
   const [pagination, setPagination] = useState<PaginationState>({
@@ -139,6 +140,7 @@ export function Table<T extends object>({
     state: {
       sorting,
       columnFilters,
+      columnOrder,
       ...(onRowSelect ? { rowSelection } : {}),
       ...(enablePagination ? { pagination } : {}),
     },
@@ -146,6 +148,7 @@ export function Table<T extends object>({
     ...(onRowSelect ? { onRowSelectionChange: setRowSelection } : {}),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onColumnOrderChange: setColumnOrder,
     ...(enablePagination ? { onPaginationChange: setPagination } : {}),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -166,6 +169,16 @@ export function Table<T extends object>({
       onRowSelect(selectedRows);
     }
   }, [rowSelection, onRowSelect, table]);
+
+  const reorderColumn = (draggedColumnId: string, targetColumnId: string) => {
+    console.log({ draggedColumnId, targetColumnId, columnOrder, columns });
+    const newColumnOrder = [...columnOrder];
+    const draggedIndex = newColumnOrder.indexOf(draggedColumnId);
+    const targetIndex = newColumnOrder.indexOf(targetColumnId);
+    newColumnOrder.splice(draggedIndex, 1);
+    newColumnOrder.splice(targetIndex, 0, draggedColumnId);
+    setColumnOrder(newColumnOrder);
+  };
 
   return (
     <div>
@@ -191,6 +204,16 @@ export function Table<T extends object>({
                     key={header.id}
                     className={styles.th}
                     style={{ width: `${header.getSize()}px` }}
+                    draggable={true}
+                    onDragStart={(e) => {
+                      e.dataTransfer.setData("text/plain", header.id);
+                    }}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      const draggedColumnId =
+                        e.dataTransfer.getData("text/plain");
+                      reorderColumn(draggedColumnId, header.id);
+                    }}
                   >
                     {header.isPlaceholder ? null : (
                       <div className={styles.thContent}>
@@ -260,8 +283,8 @@ export function Table<T extends object>({
                   </th>
                 );
               })}
-              <th className={styles.th} style={{ width: "60px" }}>
-                Actions
+              <th className={styles.th} style={{ width: "90px" }}>
+                <div className={styles.thContent}>Actions</div>
               </th>
             </tr>
           ))}
