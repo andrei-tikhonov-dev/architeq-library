@@ -11,14 +11,13 @@ import {
   flexRender,
   PaginationState,
 } from "@tanstack/react-table";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { css } from "@emotion/css";
 import { IconButton } from "../IconButton";
 import { Pagination } from "../Pagination";
 import { Checkbox } from "../Checkbox";
 import { fontFamily } from "../../contstants/theme";
+import { DropdownMenu, DropdownMenuItem } from "../DropdownMenu/DropdownMenu";
 
-// Dedicated theme for the Table component
 const tableTheme = {
   colors: {
     background: {
@@ -68,7 +67,7 @@ interface TableProps<T extends object> {
 const getStyles = (striped?: boolean) => ({
   table: css`
     width: 100%;
-    table-layout: fixed; /* Critical for fixed width columns */
+    table-layout: fixed;
     border-collapse: collapse;
     background: ${tableTheme.colors.background.primary};
     font-family: ${tableTheme.fontFamily};
@@ -130,24 +129,144 @@ const getStyles = (striped?: boolean) => ({
     color: ${tableTheme.colors.text.light};
     border-radius: ${tableTheme.radius.button};
   `,
-  dropdownContent: css`
-    min-width: 160px;
-    background: ${tableTheme.colors.background.primary};
-    border-radius: ${tableTheme.border.radius.sm};
-    padding: ${tableTheme.spacing.sm};
-    box-shadow: ${tableTheme.shadows.md};
+  headerContent: css`
+    display: flex;
+    align-items: center;
+    gap: ${tableTheme.spacing.sm};
+    flex: 1;
+    user-select: none;
   `,
-  dropdownItem: css`
-    padding: ${tableTheme.spacing.md};
-    cursor: pointer;
-    border-radius: ${tableTheme.border.radius.sm};
-    color: ${tableTheme.colors.text.default};
+  resizeHandle: css`
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: ${tableTheme.spacing.md};
+    cursor: col-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 
     &:hover {
-      background: ${tableTheme.colors.background.secondary};
+      background-color: ${tableTheme.colors.background.primary};
+    }
+
+    &:active {
+      background-color: ${tableTheme.colors.background.secondary};
     }
   `,
+  resizeLine: css`
+    height: 70%;
+    width: 2px;
+    background-color: ${tableTheme.colors.background.primary};
+  `,
 });
+
+// @ts-ignore
+interface TableHeaderCellProps<T extends object> {
+  header: any;
+  enableSorting: boolean;
+  onReorderColumn: (draggedColumnId: string, targetColumnId: string) => void;
+  styles: any;
+}
+
+function TableHeaderCell<T extends object>({
+  header,
+  enableSorting,
+  onReorderColumn,
+  styles,
+}: TableHeaderCellProps<T>) {
+  if (header.isPlaceholder) {
+    return <div></div>;
+  }
+
+  return (
+    <div className={styles.thContent}>
+      <div
+        className={`${styles.headerContent} ${
+          header.column.getCanSort()
+            ? css`
+                cursor: pointer;
+              `
+            : css`
+                cursor: default;
+              `
+        }`}
+        draggable={true}
+        onDragStart={(e) => {
+          e.dataTransfer.setData("text/plain", header.id);
+        }}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          const draggedColumnId = e.dataTransfer.getData("text/plain");
+          onReorderColumn(draggedColumnId, header.id);
+        }}
+      >
+        {flexRender(header.column.columnDef.header, header.getContext())}
+
+        {enableSorting && header.column.getCanSort() && (
+          <IconButton
+            name={
+              header.column.getIsSorted() === "asc"
+                ? "ArrowDropUp"
+                : header.column.getIsSorted() === "desc"
+                ? "ArrowDropDown"
+                : "Sort"
+            }
+            size="sm"
+            onClick={header.column.getToggleSortingHandler()}
+          />
+        )}
+      </div>
+
+      <div
+        className={styles.resizeHandle}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          header.getResizeHandler()(e);
+        }}
+        onTouchStart={(e) => {
+          e.stopPropagation();
+          header.getResizeHandler()(e);
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        draggable={false}
+      >
+        <div className={styles.resizeLine} draggable={false} />
+      </div>
+    </div>
+  );
+}
+
+interface TableActionCellProps {
+  styles: any;
+}
+
+function TableActionCell({ styles }: TableActionCellProps) {
+  return (
+    <DropdownMenu
+      menuContent={
+        <>
+          <DropdownMenuItem onSelect={() => console.log("Edit")}>
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => console.log("Delete")}>
+            Delete
+          </DropdownMenuItem>
+        </>
+      }
+    >
+      <IconButton
+        name="MoreVert"
+        size="sm"
+        className={styles.dropdownTrigger}
+      />
+    </DropdownMenu>
+  );
+}
 
 export function Table<T extends object>({
   data,
@@ -207,7 +326,6 @@ export function Table<T extends object>({
   }, [rowSelection, onRowSelect, table]);
 
   const reorderColumn = (draggedColumnId: string, targetColumnId: string) => {
-    console.log({ draggedColumnId, targetColumnId, columnOrder, columns });
     const newColumnOrder = [...columnOrder];
     const draggedIndex = newColumnOrder.indexOf(draggedColumnId);
     const targetIndex = newColumnOrder.indexOf(targetColumnId);
@@ -241,103 +359,15 @@ export function Table<T extends object>({
                     className={styles.th}
                     style={{ width: `${header.getSize()}px` }}
                   >
-                    {!header.isPlaceholder && (
-                      <div className={styles.thContent}>
-                        {/* Draggable content */}
-                        <div
-                          className={css`
-                            display: flex;
-                            align-items: center;
-                            gap: ${tableTheme.spacing.sm};
-                            flex: 1;
-                            cursor: ${header.column.getCanSort()
-                              ? "pointer"
-                              : "default"};
-                            user-select: none;
-                          `}
-                          draggable={true}
-                          onDragStart={(e) => {
-                            e.dataTransfer.setData("text/plain", header.id);
-                          }}
-                          onDragOver={(e) => e.preventDefault()}
-                          onDrop={(e) => {
-                            const draggedColumnId =
-                              e.dataTransfer.getData("text/plain");
-                            reorderColumn(draggedColumnId, header.id);
-                          }}
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-
-                          {enableSorting && header.column.getCanSort() && (
-                            <IconButton
-                              name={
-                                header.column.getIsSorted() === "asc"
-                                  ? "ArrowDropUp"
-                                  : header.column.getIsSorted() === "desc"
-                                  ? "ArrowDropDown"
-                                  : "Sort"
-                              }
-                              size="sm"
-                              onClick={header.column.getToggleSortingHandler()}
-                            />
-                          )}
-                        </div>
-
-                        <div
-                          className={css`
-                            position: absolute;
-                            right: 0;
-                            top: 0;
-                            height: 100%;
-                            width: ${tableTheme.spacing.md};
-                            cursor: col-resize;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            z-index: 1;
-
-                            &:hover {
-                              background-color: ${tableTheme.colors.background
-                                .primary};
-                            }
-
-                            &:active {
-                              background-color: ${tableTheme.colors.background
-                                .secondary};
-                            }
-                          `}
-                          onMouseDown={(e) => {
-                            e.stopPropagation();
-                            header.getResizeHandler()(e);
-                          }}
-                          onTouchStart={(e) => {
-                            e.stopPropagation();
-                            header.getResizeHandler()(e);
-                          }}
-                          onClick={(e) => {
-                            // Prevent click event from bubbling up
-                            e.stopPropagation();
-                          }}
-                          draggable={false}
-                        >
-                          <div
-                            className={css`
-                              height: 70%;
-                              width: 2px;
-                              background-color: ${tableTheme.colors.background
-                                .primary};
-                            `}
-                            draggable={false}
-                          />
-                        </div>
-                      </div>
-                    )}
+                    <TableHeaderCell
+                      header={header}
+                      enableSorting={enableSorting}
+                      onReorderColumn={reorderColumn}
+                      styles={styles}
+                    />
                   </th>
                 );
-              })}{" "}
+              })}
               <th className={styles.th} style={{ width: "90px" }}>
                 <div className={styles.thContent}>Actions</div>
               </th>
@@ -371,25 +401,7 @@ export function Table<T extends object>({
                 );
               })}
               <td className={styles.td} style={{ width: "60px" }}>
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger asChild>
-                    <IconButton
-                      name="MoreVert"
-                      size="sm"
-                      className={styles.dropdownTrigger}
-                    />
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Portal>
-                    <DropdownMenu.Content className={styles.dropdownContent}>
-                      <DropdownMenu.Item className={styles.dropdownItem}>
-                        Edit
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item className={styles.dropdownItem}>
-                        Delete
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Portal>
-                </DropdownMenu.Root>
+                <TableActionCell styles={styles} />
               </td>
             </tr>
           ))}
