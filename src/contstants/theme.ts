@@ -1,3 +1,6 @@
+export const fontFamily =
+  '"Segoe UI", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;';
+
 // Color constants
 export const COLORS = {
   // Brand colors
