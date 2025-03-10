@@ -51,6 +51,7 @@ const styles = {
     box-shadow: ${dropdownMenuTheme.shadows.md};
     max-width: 260px;
     width: max-content;
+    z-index: 1000;
   `,
   item: css`
     padding: ${dropdownMenuTheme.spacing.sm};

@@ -17,6 +17,7 @@ import { Pagination } from "../Pagination";
 import { Checkbox } from "../Checkbox";
 import { fontFamily } from "../../contstants/theme";
 import { DropdownMenu, DropdownMenuItem } from "../DropdownMenu/DropdownMenu";
+import { Icon } from "../Icon";
 
 const tableTheme = {
   colors: {
@@ -125,11 +126,8 @@ const getStyles = (striped?: boolean) => ({
     gap: ${tableTheme.spacing.md};
     color: ${tableTheme.colors.text.default};
   `,
-  dropdownTrigger: css`
-    color: ${tableTheme.colors.text.light};
-    border-radius: ${tableTheme.radius.button};
-  `,
   headerContent: css`
+    cursor: grab;
     display: flex;
     align-items: center;
     gap: ${tableTheme.spacing.sm};
@@ -161,6 +159,11 @@ const getStyles = (striped?: boolean) => ({
     width: 2px;
     background-color: ${tableTheme.colors.background.primary};
   `,
+  sortIcon: css`
+    display: flex;
+    align-items: center;
+    margin-left: ${tableTheme.spacing.sm};
+  `,
 });
 
 // @ts-ignore
@@ -181,18 +184,20 @@ function TableHeaderCell<T extends object>({
     return <div></div>;
   }
 
+  const sortDirection = header.column.getIsSorted();
+
+  const setSorting = (direction: "asc" | "desc") => {
+    header.column.toggleSorting(direction !== "asc", false);
+  };
+
+  const clearSorting = () => {
+    header.column.clearSorting();
+  };
+
   return (
     <div className={styles.thContent}>
       <div
-        className={`${styles.headerContent} ${
-          header.column.getCanSort()
-            ? css`
-                cursor: pointer;
-              `
-            : css`
-                cursor: default;
-              `
-        }`}
+        className={styles.headerContent}
         draggable={true}
         onDragStart={(e) => {
           e.dataTransfer.setData("text/plain", header.id);
@@ -205,20 +210,37 @@ function TableHeaderCell<T extends object>({
       >
         {flexRender(header.column.columnDef.header, header.getContext())}
 
-        {enableSorting && header.column.getCanSort() && (
-          <IconButton
-            name={
-              header.column.getIsSorted() === "asc"
-                ? "ArrowDropUp"
-                : header.column.getIsSorted() === "desc"
-                ? "ArrowDropDown"
-                : "Sort"
-            }
-            size="sm"
-            onClick={header.column.getToggleSortingHandler()}
-          />
+        {enableSorting && sortDirection && (
+          <div className={styles.sortIcon}>
+            <Icon
+              name={sortDirection === "asc" ? "ArrowDropUp" : "ArrowDropDown"}
+              size="sm"
+            />
+          </div>
         )}
       </div>
+
+      {enableSorting && header.column.getCanSort() && (
+        <DropdownMenu
+          menuContent={
+            <>
+              <DropdownMenuItem onSelect={() => setSorting("asc")}>
+                Sort ascending
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setSorting("desc")}>
+                Sort descending
+              </DropdownMenuItem>
+              {sortDirection && (
+                <DropdownMenuItem onSelect={() => clearSorting()}>
+                  Clear sort
+                </DropdownMenuItem>
+              )}
+            </>
+          }
+        >
+          <IconButton name="MoreHoriz" size="sm" />
+        </DropdownMenu>
+      )}
 
       <div
         className={styles.resizeHandle}
