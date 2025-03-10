@@ -3,45 +3,61 @@ import React from "react";
 
 import { StatusLineProps } from "./types";
 import { StatusIcon } from "../StatusIcon";
-import theme from "../../contstants/theme";
 import { TooltipLine } from "../TooltipLine";
 import { ToggleTip } from "../ToggleTip";
 import { IconButton } from "../IconButton";
 import { Icon } from "../Icon";
+import { fontFamily } from "../../contstants/theme";
+
+const statusLineTheme = {
+  colors: {
+    text: {
+      default: "#212226",
+      light: "#7A7A7D",
+    },
+  },
+  fontFamily,
+  margins: {
+    default: "8px",
+    small: "4px",
+  },
+};
 
 const styles = {
   container: css`
-    color: ${theme.colors.text.default};
-    font-family: ${theme.fontFamily};
+    color: ${statusLineTheme.colors.text.default};
+    font-family: ${statusLineTheme.fontFamily};
     font-size: 14px;
     line-height: 20px;
   `,
   icon: css`
-    margin-right: ${theme.margins.default}; /* Отступ после иконки */
+    margin-right: ${statusLineTheme.margins.default}; /* Отступ после иконки */
     margin-bottom: -2px;
   `,
   title: css`
     font-weight: 600;
-    margin-right: ${theme.margins.default}; /* Отступ после заголовка */
+    margin-right: ${statusLineTheme.margins
+      .default}; /* Отступ после заголовка */
   `,
   description: css`
-    color: ${theme.colors.text.light};
-    margin-right: ${theme.margins.default}; /* Отступ после описания */
+    color: ${statusLineTheme.colors.text.light};
+    margin-right: ${statusLineTheme.margins
+      .default}; /* Отступ после описания */
 
     &::before {
       content: "•";
-      color: ${theme.colors.text.light};
-      margin-right: ${theme.margins.default};
+      color: ${statusLineTheme.colors.text.light};
+      margin-right: ${statusLineTheme.margins.default};
     }
   `,
   link: css`
-    color: ${theme.colors.text.light};
+    color: ${statusLineTheme.colors.text.light};
     &:hover {
-      color: ${theme.colors.text.default};
+      color: ${statusLineTheme.colors.text.default};
     }
   `,
   linkIcon: css`
-    margin-left: ${theme.margins.small};
+    margin-left: ${statusLineTheme.margins.small};
     margin-bottom: -4px;
   `,
 };

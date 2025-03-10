@@ -13,10 +13,46 @@ import {
 } from "@tanstack/react-table";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { css } from "@emotion/css";
-import theme from "../../contstants/theme";
 import { IconButton } from "../IconButton";
 import { Pagination } from "../Pagination";
 import { Checkbox } from "../Checkbox";
+import { fontFamily } from "../../contstants/theme";
+
+// Dedicated theme for the Table component
+const tableTheme = {
+  colors: {
+    background: {
+      primary: "#FFFFFF",
+      secondary: "#F4F5F7",
+    },
+    text: {
+      default: "#212226",
+      light: "#7A7A7D",
+    },
+  },
+  fontFamily,
+  spacing: {
+    sm: "4px",
+    md: "8px",
+    lg: "16px",
+  },
+  typography: {
+    size: {
+      md: "14px",
+    },
+  },
+  border: {
+    radius: {
+      sm: "4px",
+    },
+  },
+  radius: {
+    button: "2px",
+  },
+  shadows: {
+    md: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+  },
+};
 
 interface TableProps<T extends object> {
   data: T[];
@@ -34,26 +70,26 @@ const getStyles = (striped?: boolean) => ({
     width: 100%;
     table-layout: fixed; /* Critical for fixed width columns */
     border-collapse: collapse;
-    background: ${theme.colors.background.primary};
-    font-family: ${theme.fontFamily};
-    font-size: ${theme.typography.size.md};
+    background: ${tableTheme.colors.background.primary};
+    font-family: ${tableTheme.fontFamily};
+    font-size: ${tableTheme.typography.size.md};
   `,
   thead: css`
     position: sticky;
     top: 0;
     z-index: 1;
-    background: ${theme.colors.background.primary};
+    background: ${tableTheme.colors.background.primary};
   `,
   th: css`
     padding: 0;
-    background: ${theme.colors.background.secondary};
+    background: ${tableTheme.colors.background.secondary};
     overflow: hidden;
   `,
   thContent: css`
-    padding: ${theme.spacing.md} ${theme.spacing.lg};
+    padding: ${tableTheme.spacing.md} ${tableTheme.spacing.lg};
     text-align: left;
     font-weight: 500;
-    color: ${theme.colors.text.light};
+    color: ${tableTheme.colors.text.light};
     user-select: none;
     display: flex;
     align-items: center;
@@ -62,53 +98,53 @@ const getStyles = (striped?: boolean) => ({
     height: 100%;
   `,
   td: css`
-    padding: ${theme.spacing.md} ${theme.spacing.lg};
-    border-bottom: 1px solid ${theme.colors.background.secondary};
-    color: ${theme.colors.text.default};
+    padding: ${tableTheme.spacing.md} ${tableTheme.spacing.lg};
+    border-bottom: 1px solid ${tableTheme.colors.background.secondary};
+    color: ${tableTheme.colors.text.default};
   `,
   sortHeader: css`
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: ${theme.spacing.sm};
+    gap: ${tableTheme.spacing.sm};
 
     &:hover {
-      color: ${theme.colors.text.default};
+      color: ${tableTheme.colors.text.default};
     }
   `,
   row: css`
     ${striped &&
     `&:nth-of-type(even) {
-       background: ${theme.colors.background.secondary};
+       background: ${tableTheme.colors.background.secondary};
      }`}
   `,
   pagination: css`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: ${theme.spacing.md} ${theme.spacing.lg};
-    gap: ${theme.spacing.md};
-    color: ${theme.colors.text.default};
+    padding: ${tableTheme.spacing.md} ${tableTheme.spacing.lg};
+    gap: ${tableTheme.spacing.md};
+    color: ${tableTheme.colors.text.default};
   `,
   dropdownTrigger: css`
-    color: ${theme.colors.text.light};
-    border-radius: ${theme.radius.button};
+    color: ${tableTheme.colors.text.light};
+    border-radius: ${tableTheme.radius.button};
   `,
   dropdownContent: css`
     min-width: 160px;
-    background: ${theme.colors.background.primary};
-    border-radius: ${theme.border.radius.sm};
-    padding: ${theme.spacing.sm};
-    box-shadow: ${theme.shadows.md};
+    background: ${tableTheme.colors.background.primary};
+    border-radius: ${tableTheme.border.radius.sm};
+    padding: ${tableTheme.spacing.sm};
+    box-shadow: ${tableTheme.shadows.md};
   `,
   dropdownItem: css`
-    padding: ${theme.spacing.md};
+    padding: ${tableTheme.spacing.md};
     cursor: pointer;
-    border-radius: ${theme.border.radius.sm};
-    color: ${theme.colors.text.default};
+    border-radius: ${tableTheme.border.radius.sm};
+    color: ${tableTheme.colors.text.default};
 
     &:hover {
-      background: ${theme.colors.background.secondary};
+      background: ${tableTheme.colors.background.secondary};
     }
   `,
 });
@@ -212,7 +248,7 @@ export function Table<T extends object>({
                           className={css`
                             display: flex;
                             align-items: center;
-                            gap: ${theme.spacing.sm};
+                            gap: ${tableTheme.spacing.sm};
                             flex: 1;
                             cursor: ${header.column.getCanSort()
                               ? "pointer"
@@ -250,14 +286,13 @@ export function Table<T extends object>({
                           )}
                         </div>
 
-                        {/* Resizer (completely separate from draggable content) */}
                         <div
                           className={css`
                             position: absolute;
                             right: 0;
                             top: 0;
                             height: 100%;
-                            width: ${theme.spacing.md};
+                            width: ${tableTheme.spacing.md};
                             cursor: col-resize;
                             display: flex;
                             align-items: center;
@@ -265,12 +300,12 @@ export function Table<T extends object>({
                             z-index: 1;
 
                             &:hover {
-                              background-color: ${theme.colors.background
+                              background-color: ${tableTheme.colors.background
                                 .primary};
                             }
 
                             &:active {
-                              background-color: ${theme.colors.background
+                              background-color: ${tableTheme.colors.background
                                 .secondary};
                             }
                           `}
@@ -292,7 +327,7 @@ export function Table<T extends object>({
                             className={css`
                               height: 70%;
                               width: 2px;
-                              background-color: ${theme.colors.background
+                              background-color: ${tableTheme.colors.background
                                 .primary};
                             `}
                             draggable={false}

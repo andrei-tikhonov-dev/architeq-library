@@ -1,71 +1,91 @@
 import React, { useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { css } from "@emotion/css";
-import theme from "../../contstants/theme";
 import { IconButton } from "../IconButton";
+import { fontFamily } from "../../contstants/theme";
+
+const toggleTipTheme = {
+  colors: {
+    background: {
+      primary: "#FFFFFF",
+    },
+    text: {
+      default: "#212226",
+      light: "#7A7A7D",
+    },
+  },
+  fontFamily,
+  spacing: {
+    sm: "4px",
+    md: "8px",
+    lg: "16px",
+  },
+  border: {
+    radius: {
+      sm: "4px",
+    },
+  },
+  shadows: {
+    md: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+  },
+  typography: {
+    size: {
+      sm: "12px",
+      md: "14px",
+    },
+  },
+};
 
 export interface ToggleTipProps {
-  /** Content to display inside the tooltip */
   content: React.ReactNode;
-  /** Optional title for the tooltip */
   title?: string;
-  /** Element that triggers the tooltip */
   children: React.ReactElement;
-  /** Alignment of the tooltip relative to the trigger */
   align?: "start" | "center" | "end";
-  /** Positioning of the tooltip relative to the trigger */
   side?: "top" | "right" | "bottom" | "left";
-  /** Controls if tooltip is open by default */
   defaultOpen?: boolean;
-  /** Controls if tooltip is open (controlled component mode) */
   open?: boolean;
-  /** Called when open state changes */
   onOpenChange?: (open: boolean) => void;
-  /** Space between trigger and tooltip */
   sideOffset?: number;
-  /** Additional CSS class for the tooltip content */
   contentClassName?: string;
-  /** Whether to show the close button */
   showCloseButton?: boolean;
-  /** Custom ID for accessibility */
   id?: string;
 }
 
 const styles = {
   container: css`
-    background-color: ${theme.colors.background.primary};
-    color: ${theme.colors.text.default};
-    font-family: ${theme.fontFamily};
+    background-color: ${toggleTipTheme.colors.background.primary};
+    color: ${toggleTipTheme.colors.text.default};
+    font-family: ${toggleTipTheme.fontFamily};
     line-height: 20px;
-    padding: ${theme.spacing.lg};
-    border-radius: ${theme.border.radius.sm};
-    font-size: ${theme.typography.size.sm};
-    box-shadow: ${theme.shadows.md};
+    padding: ${toggleTipTheme.spacing.lg};
+    border-radius: ${toggleTipTheme.border.radius.sm};
+    font-size: ${toggleTipTheme.typography.size.sm};
+    box-shadow: ${toggleTipTheme.shadows.md};
     position: relative;
     max-width: 320px;
     width: 100%;
   `,
   title: css`
     font-weight: 500;
-    font-size: ${theme.typography.size.md};
-    margin-bottom: ${theme.spacing.sm};
-    padding-right: ${theme.spacing.lg};
-    color: ${theme.colors.text.default};
+    font-size: ${toggleTipTheme.typography.size.md};
+    margin-bottom: ${toggleTipTheme.spacing.sm};
+    padding-right: ${toggleTipTheme.spacing.lg};
+    color: ${toggleTipTheme.colors.text.default};
   `,
   contentWrapper: css`
-    margin-top: ${theme.spacing.sm};
+    margin-top: ${toggleTipTheme.spacing.sm};
   `,
   arrow: css`
-    fill: ${theme.colors.background.primary};
+    fill: ${toggleTipTheme.colors.background.primary};
   `,
   closeButton: css`
     position: absolute;
-    top: ${theme.spacing.sm};
-    right: ${theme.spacing.sm};
-    color: ${theme.colors.text.light};
+    top: ${toggleTipTheme.spacing.sm};
+    right: ${toggleTipTheme.spacing.sm};
+    color: ${toggleTipTheme.colors.text.light};
 
     &:hover {
-      color: ${theme.colors.text.default};
+      color: ${toggleTipTheme.colors.text.default};
     }
   `,
 };

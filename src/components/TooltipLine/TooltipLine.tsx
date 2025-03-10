@@ -2,29 +2,42 @@ import { css } from "@emotion/css";
 import React from "react";
 
 import { TooltipLineProps } from "./types";
-import theme from "../../contstants/theme";
 import { Icon } from "../Icon";
+import { fontFamily } from "../../contstants/theme";
+
+const tooltipLineTheme = {
+  colors: {
+    text: {
+      default: "#212226",
+      light: "#7A7A7D",
+    },
+  },
+  fontFamily,
+  margins: {
+    default: "8px",
+  },
+};
 
 const styles = {
   container: css`
-    color: ${theme.colors.text.default};
-    font-family: ${theme.fontFamily};
+    color: ${tooltipLineTheme.colors.text.default};
+    font-family: ${tooltipLineTheme.fontFamily};
     font-size: 14px;
     line-height: 20px;
   `,
   text: css`
-    margin-right: ${theme.margins.default};
+    margin-right: ${tooltipLineTheme.margins.default};
 
     &::before {
       content: "•";
-      color: ${theme.colors.text.light};
-      margin-right: ${theme.margins.default};
+      color: ${tooltipLineTheme.colors.text.light};
+      margin-right: ${tooltipLineTheme.margins.default};
     }
   `,
   link: css`
-    color: ${theme.colors.text.light};
+    color: ${tooltipLineTheme.colors.text.light};
     &:hover {
-      color: ${theme.colors.text.default};
+      color: ${tooltipLineTheme.colors.text.default};
     }
   `,
   linkIcon: css`
