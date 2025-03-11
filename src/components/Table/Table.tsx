@@ -10,6 +10,7 @@ import {
   ColumnFiltersState,
   flexRender,
   PaginationState,
+  VisibilityState,
 } from "@tanstack/react-table";
 import { css } from "@emotion/css";
 import { IconButton } from "../IconButton";
@@ -172,6 +173,9 @@ interface TableHeaderCellProps<T extends object> {
   enableSorting: boolean;
   onReorderColumn: (draggedColumnId: string, targetColumnId: string) => void;
   styles: any;
+  onHideColumn: (columnId: string) => void;
+  hasHiddenColumns: boolean;
+  onShowAllColumns: () => void;
 }
 
 function TableHeaderCell<T extends object>({
@@ -179,6 +183,9 @@ function TableHeaderCell<T extends object>({
   enableSorting,
   onReorderColumn,
   styles,
+  onHideColumn,
+  hasHiddenColumns,
+  onShowAllColumns,
 }: TableHeaderCellProps<T>) {
   if (header.isPlaceholder) {
     return <div></div>;
@@ -220,19 +227,31 @@ function TableHeaderCell<T extends object>({
         )}
       </div>
 
-      {enableSorting && header.column.getCanSort() && (
+      {(enableSorting && header.column.getCanSort()) || true ? (
         <DropdownMenu
           menuContent={
             <>
-              <DropdownMenuItem onSelect={() => setSorting("asc")}>
-                Sort ascending
+              {enableSorting && header.column.getCanSort() && (
+                <>
+                  <DropdownMenuItem onSelect={() => setSorting("asc")}>
+                    Sort ascending
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSorting("desc")}>
+                    Sort descending
+                  </DropdownMenuItem>
+                  {sortDirection && (
+                    <DropdownMenuItem onSelect={() => clearSorting()}>
+                      Clear sort
+                    </DropdownMenuItem>
+                  )}
+                </>
+              )}
+              <DropdownMenuItem onSelect={() => onHideColumn(header.id)}>
+                Hide column
               </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setSorting("desc")}>
-                Sort descending
-              </DropdownMenuItem>
-              {sortDirection && (
-                <DropdownMenuItem onSelect={() => clearSorting()}>
-                  Clear sort
+              {hasHiddenColumns && (
+                <DropdownMenuItem onSelect={onShowAllColumns}>
+                  Show all columns
                 </DropdownMenuItem>
               )}
             </>
@@ -240,7 +259,7 @@ function TableHeaderCell<T extends object>({
         >
           <IconButton name="MoreHoriz" size="sm" />
         </DropdownMenu>
-      )}
+      ) : null}
 
       <div
         className={styles.resizeHandle}
@@ -310,6 +329,7 @@ export function Table<T extends object>({
     pageIndex: 0,
     pageSize: pageSize,
   });
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -318,6 +338,7 @@ export function Table<T extends object>({
       sorting,
       columnFilters,
       columnOrder,
+      columnVisibility,
       ...(onRowSelect ? { rowSelection } : {}),
       ...(enablePagination ? { pagination } : {}),
     },
@@ -326,6 +347,7 @@ export function Table<T extends object>({
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnOrderChange: setColumnOrder,
+    onColumnVisibilityChange: setColumnVisibility,
     ...(enablePagination ? { onPaginationChange: setPagination } : {}),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -355,6 +377,21 @@ export function Table<T extends object>({
     newColumnOrder.splice(targetIndex, 0, draggedColumnId);
     setColumnOrder(newColumnOrder);
   };
+
+  const hideColumn = (columnId: string) => {
+    setColumnVisibility((prev) => ({
+      ...prev,
+      [columnId]: false,
+    }));
+  };
+
+  const showAllColumns = () => {
+    setColumnVisibility({});
+  };
+
+  const hasHiddenColumns = Object.values(columnVisibility).some(
+    (value) => value === false
+  );
 
   return (
     <div>
@@ -386,6 +423,9 @@ export function Table<T extends object>({
                       enableSorting={enableSorting}
                       onReorderColumn={reorderColumn}
                       styles={styles}
+                      onHideColumn={hideColumn}
+                      hasHiddenColumns={hasHiddenColumns}
+                      onShowAllColumns={showAllColumns}
                     />
                   </th>
                 );
