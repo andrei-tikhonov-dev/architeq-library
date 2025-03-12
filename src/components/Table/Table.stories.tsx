@@ -19,7 +19,7 @@ interface TeamMember {
   workload: number;
   workStartDate: string;
   workEndDate: string;
-  description?: string; // Added for long text examples
+  description?: string;
 }
 
 const meta: Meta<typeof Table> = {
@@ -61,7 +61,6 @@ const meta: Meta<typeof Table> = {
       description: "Number of rows per page",
       defaultValue: 10,
     },
-    // Removed onRowSelect from common argTypes
   },
 };
 
@@ -225,7 +224,6 @@ const getRandomTaskTitle = () => {
   return `${action} ${object}${detail}`;
 };
 
-// Function to generate long texts for TableCell demonstration
 const getLongTaskDescription = (taskTitle: string) => {
   const descriptions = [
     `This task involves ${taskTitle.toLowerCase()} which requires extensive work across multiple services and components. The developer will need to ensure backward compatibility and proper error handling throughout the implementation. This should include comprehensive logging and monitoring. All changes should be thoroughly tested in QA and staging environments before deployment.`,
@@ -297,7 +295,7 @@ const getRandomDate = (startYear = 2023, endYear = 2025) => {
   const year =
     startYear + Math.floor(Math.random() * (endYear - startYear + 1));
   const month = Math.floor(Math.random() * 12) + 1;
-  const day = Math.floor(Math.random() * 28) + 1; // avoid problems with different days in months
+  const day = Math.floor(Math.random() * 28) + 1;
 
   return `${day.toString().padStart(2, "0")}.${month
     .toString()
@@ -340,56 +338,55 @@ const teamColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
     header: "Team member",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "email",
     header: "Email",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "taskId",
     header: "Internal org ID",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "workload",
     header: "Workload ratio",
-    cell: (info) => `${info.getValue()}`,
+    cell: (info) => <TableCell>{`${info.getValue()}`}</TableCell>,
   },
   {
     accessorKey: "role",
     header: "Role",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "workStartDate",
     header: "Work start date",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "workEndDate",
     header: "Work end date",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
 ];
 
-// Second set of columns - for task representation
 const taskColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
     header: "Team member",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "taskId",
     header: "Identifier",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "taskTitle",
     header: "Task title",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "type",
@@ -397,37 +394,39 @@ const taskColumns: Array<ColumnDef<TeamMember>> = [
     cell: (info) => {
       const type = info.getValue() as string;
       return (
-        <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-          {type === "Bug" ? (
-            <span
-              style={{
-                color: theme.colors.statuses.blocker,
-                paddingTop: "2px",
-              }}
-            >
-              <Icon name="BugReport" />
-            </span>
-          ) : (
-            <span
-              style={{ color: theme.colors.statuses.info, paddingTop: "2px" }}
-            >
-              <Icon name="Check" />
-            </span>
-          )}
-          <span>{type}</span>
-        </div>
+        <TableCell>
+          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            {type === "Bug" ? (
+              <span
+                style={{
+                  color: theme.colors.statuses.blocker,
+                  paddingTop: "2px",
+                }}
+              >
+                <Icon name="BugReport" />
+              </span>
+            ) : (
+              <span
+                style={{ color: theme.colors.statuses.info, paddingTop: "2px" }}
+              >
+                <Icon name="Check" />
+              </span>
+            )}
+            <span>{type}</span>
+          </div>
+        </TableCell>
       );
     },
   },
   {
     accessorKey: "storyPoints",
     header: "SP",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "inProgress",
     header: "In progress",
-    cell: (info) => info.getValue(),
+    cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
   },
   {
     accessorKey: "status",
@@ -439,12 +438,15 @@ const taskColumns: Array<ColumnDef<TeamMember>> = [
         Open: { color: theme.colors.statuses.warning },
         Closed: { color: theme.colors.statuses.success },
       };
-      return <span style={statusStyles[status]}>{status}</span>;
+      return (
+        <TableCell>
+          <span style={statusStyles[status]}>{status}</span>
+        </TableCell>
+      );
     },
   },
 ];
 
-// Columns for TableCell demonstration with long texts
 const tableCellColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
@@ -490,7 +492,6 @@ const tableCellColumns: Array<ColumnDef<TeamMember>> = [
   },
 ];
 
-// Columns specifically for demonstrating overflow behavior
 const longTextColumns: Array<ColumnDef<TeamMember>> = [
   {
     accessorKey: "name",
@@ -506,13 +507,13 @@ const longTextColumns: Array<ColumnDef<TeamMember>> = [
     accessorKey: "taskTitle",
     header: "Task Title",
     cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
-    size: 200, // Limit width to ensure overflow
+    size: 200,
   },
   {
     accessorKey: "description",
     header: "Description",
     cell: (info) => <TableCell>{String(info.getValue())}</TableCell>,
-    size: 250, // Limit width to ensure overflow
+    size: 250,
   },
   {
     accessorKey: "status",
@@ -533,7 +534,6 @@ const longTextColumns: Array<ColumnDef<TeamMember>> = [
   },
 ];
 
-// Table with team data
 export const TeamTable: Story = {
   args: {
     data: teamData,
@@ -542,11 +542,10 @@ export const TeamTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: undefined, // Explicitly set to undefined
+    onRowSelect: undefined,
   },
 };
 
-// Table with task data
 export const TaskTable: Story = {
   args: {
     data: teamData,
@@ -555,11 +554,10 @@ export const TaskTable: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: undefined, // Explicitly set to undefined
+    onRowSelect: undefined,
   },
 };
 
-// Table with stripes
 export const StripedTable: Story = {
   args: {
     data: teamData,
@@ -569,11 +567,10 @@ export const StripedTable: Story = {
     enablePagination: true,
     pageSize: 10,
     striped: true,
-    onRowSelect: undefined, // Explicitly set to undefined
+    onRowSelect: undefined,
   },
 };
 
-// Table without pagination
 export const WithoutPagination: Story = {
   args: {
     data: teamData,
@@ -582,11 +579,10 @@ export const WithoutPagination: Story = {
     enableFiltering: true,
     enablePagination: false,
     pageSize: 10,
-    onRowSelect: undefined, // Explicitly set to undefined
+    onRowSelect: undefined,
   },
 };
 
-// Table without sorting
 export const WithoutSorting: Story = {
   args: {
     data: teamData,
@@ -595,11 +591,10 @@ export const WithoutSorting: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 10,
-    onRowSelect: undefined, // Explicitly set to undefined
+    onRowSelect: undefined,
   },
 };
 
-// New story with row selection capability
 export const WithRowSelection: Story = {
   args: {
     data: teamData,
@@ -612,7 +607,6 @@ export const WithRowSelection: Story = {
       console.log("Selected rows:", selectedRows);
     },
   },
-  // Add argTypes specifically for this story
   argTypes: {
     onRowSelect: {
       description: "Callback function for selected rows",
@@ -629,7 +623,6 @@ export const WithRowSelection: Story = {
   },
 };
 
-// Table with smaller page size
 export const CustomPageSize: Story = {
   args: {
     data: teamData,
@@ -638,11 +631,10 @@ export const CustomPageSize: Story = {
     enableFiltering: true,
     enablePagination: true,
     pageSize: 5,
-    onRowSelect: undefined, // Explicitly set to undefined
+    onRowSelect: undefined,
   },
 };
 
-// Table using TableCell component
 export const WithTableCell: Story = {
   args: {
     data: teamData,
@@ -663,7 +655,6 @@ export const WithTableCell: Story = {
   },
 };
 
-// Table with long text content that demonstrates overflow behavior
 export const WithLongTextContent: Story = {
   args: {
     data: teamData,
